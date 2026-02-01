@@ -1,0 +1,7 @@
+<svg viewBox="0 0 40 40" class="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg"><defs><filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2" result="coloredBlur"></feGaussianBlur><feMerge><feMergeNode in="coloredBlur"></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge></filter><linearGradient id="strokeGradient" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="hsl(195, 100%, 50%)"></stop><stop offset="100%" stop-color="hsl(270, 80%, 60%)"></stop></linearGradient></defs><circle cx="20" cy="20" r="18" stroke="url(#strokeGradient)" stroke-width="1.5" fill="none" class="transition-all duration-500 opacity-50" style="filter: none;"></circle><path d="M12 12 L20 28 L28 12" stroke="url(#strokeGradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" class="animate-draw-stroke" style="filter: none;"></path><path d="M16 14 C16 14 24 10 24 16 C24 22 16 20 16 26 C16 30 24 28 24 28" stroke="url(#strokeGradient)" stroke-width="1.5" stroke-linecap="round" fill="none" class="transition-opacity duration-300 opacity-60" style="filter: none;"></path></svg>
+
+
+
+
+
+
