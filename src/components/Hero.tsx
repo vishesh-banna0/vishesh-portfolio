@@ -10,7 +10,7 @@ const roles = [
   'Aspiring AI/ML Engineer',
   'M.Tech AI @NITJ',
   '300+ DSA Problem Solved',
-  'Top 99.91%ile @GateOverflow',
+  'Ranked 1844 on GateOverflow (99.91 percentile)',
   'Top 32%  @LeetCode',
   'Diffusion Model Practitioner',
   'Kaggler'
