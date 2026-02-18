@@ -5,15 +5,17 @@ import ProjectModal from './ProjectModal';
 const projectsData = [
   {
     id: 1,
-    title: 'Denoising Diffusion Probabilistic Models (DDPM) – Paper Implementation',
-    summary: 'From-scratch implementation of DDPM for image generation',
+    title: 'NewStack AI',
+    summary: 'An AI news aggregator and summarization platform',
     description:
-      'A research-focused implementation of the DDPM paper, covering forward and reverse diffusion processes, noise scheduling, and U-Net based architecture. Conducted experiments on sampling steps and noise variance to improve convergence stability and visual fidelity.',
+      'NewsStack AI is an end-to-end AI-powered news aggregation system that collects, summarizes, ranks, and delivers personalized daily AI updates from multiple sources.',
     image: 'https://sushant-kumar.com/blog/ddpm-diffusion-process.png',
-    technologies: ['Python', 'PyTorch', 'U-Net', 'Diffusion Models'],
-    githubUrl: 'https://github.com/vishesh-banna0/Denoising-Diffusion-Probabilistic-Model-Implementation',
+    technologies: ['Python', 'PostgreSQL', 'SQLAlchemy', 'Pydantic', 'OpenAI API', 'LLMs', 'RSS (feedparser)', 'YouTube Transcript API', 'Gmail SMTP', 'Docker', 'UV']
+,
+    githubUrl: 'https://github.com/vishesh-banna0/NewStack-AI',
     liveUrl: '',
   },
+  
   {
     id: 2,
     title: 'Stable Diffusion Project – Text-to-Image Generation',
@@ -36,8 +38,22 @@ const projectsData = [
     githubUrl: 'https://github.com/vishesh-banna0/VoyageAI',
     liveUrl: '',
   },
+
+  {
+    id: 4,
+    title: 'Denoising Diffusion Probabilistic Models (DDPM) – Paper Implementation',
+    summary: 'From-scratch implementation of DDPM for image generation',
+    description:
+      'A research-focused implementation of the DDPM paper, covering forward and reverse diffusion processes, noise scheduling, and U-Net based architecture. Conducted experiments on sampling steps and noise variance to improve convergence stability and visual fidelity.',
+    image: 'https://sushant-kumar.com/blog/ddpm-diffusion-process.png',
+    technologies: ['Python', 'PyTorch', 'U-Net', 'Diffusion Models'],
+    githubUrl: 'https://github.com/vishesh-banna0/Denoising-Diffusion-Probabilistic-Model-Implementation',
+    liveUrl: '',
+  },
+
+  
  {
-  id: 4,
+  id: 5,
   title: 'Next AI System – Coming Soon',
   summary: 'Currently building something impactful in AI',
   description:
