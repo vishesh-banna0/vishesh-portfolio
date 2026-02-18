@@ -9,7 +9,7 @@ const projectsData = [
     summary: 'An AI news aggregator and summarization platform',
     description:
       'NewsStack AI is an end-to-end AI-powered news aggregation system that collects, summarizes, ranks, and delivers personalized daily AI updates from multiple sources.',
-    image: 'https://sushant-kumar.com/blog/ddpm-diffusion-process.png',
+    image: 'https://www.brookings.edu/wp-content/uploads/2024/07/shutterstock_2322921091-2.jpg?quality=75',
     technologies: ['Python', 'PostgreSQL', 'SQLAlchemy', 'Pydantic', 'OpenAI API', 'LLMs', 'RSS (feedparser)', 'YouTube Transcript API', 'Gmail SMTP', 'Docker', 'UV']
 ,
     githubUrl: 'https://github.com/vishesh-banna0/NewStack-AI',
