@@ -107,10 +107,12 @@ const About = () => {
             style={{ transitionDelay: '600ms' }}
           >
             {[
-              { value: '4+', label: 'Projects Completed' },
-              { value: '300+', label: 'LeetCode Problems' },
+              { value: '6+', label: 'Projects Completed' },
+              { value: '350+', label: 'LeetCode Problems' },
               { value: '7+', label: 'Kaggle Competitions' },
               { value: '2+', label: 'Years in AI/ML' },
+              { value: '350', label: 'Global Rank @TensorTonic'},
+              { value: '10+', label: 'Participated Hackathons' },
             ].map((stat, index) => (
               <div key={index} className="text-center p-6 glass-card hover:border-primary/30 transition-colors duration-300">
                 <div className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent mb-2">
