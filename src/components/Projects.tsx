@@ -24,7 +24,7 @@ const projectsData = [
     'Nomic Embeddings',
     'PyMuPDF'
   ],
-  githubUrl: '', // add your repo link here
+  githubUrl: 'https://github.com/vishesh-banna0/manOS-ai', // add your repo link here
   liveUrl: '',
 },
   {
