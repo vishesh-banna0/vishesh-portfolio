@@ -8,7 +8,7 @@ const projectsData = [
   title: 'Manos AI – Modular Adaptive Learning System',
   summary: 'Local-first AI system for transforming content into adaptive learning',
   description:
-    'Manos AI (Modular Adaptive Network Orchestrating System) is a local-first AI learning platform that converts unstructured content like PDFs into structured knowledge and adaptive learning experiences. It features a full pipeline including content extraction, context-aware chunking, embedding generation, Q&A creation, and flashcard-based learning with spaced repetition. The system uses modular, instance-based architecture where each subject acts as an independent learning module with its own knowledge base, performance tracking, and adaptive scheduling.',
+    'Manos AI provides an intelligent learning platform that adapts to individual performance, offering personalized education through modular subject instances. The system processes documents, generates questions, manages flashcards with spaced repetition, and conducts adaptive tests while providing comprehensive analytics.',
   image: 'https://cdn.bap-software.net/2025/03/01171751/Adaptive-Learning_11zon.webp',
   technologies: [
     'Python',
