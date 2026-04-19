@@ -113,6 +113,8 @@ const About = () => {
               { value: '2+', label: 'Years in AI/ML' },
               { value: '350', label: 'Global Rank @TensorTonic'},
               { value: '10+', label: 'Participated Hackathons' },
+              { value: '2 times', label: 'Qualified GATE' },
+              { value: '300+', label: 'DSA Problems Solved' },
             ].map((stat, index) => (
               <div key={index} className="text-center p-6 glass-card hover:border-primary/30 transition-colors duration-300">
                 <div className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent mb-2">
