@@ -4,7 +4,31 @@ import ProjectModal from './ProjectModal';
 
 const projectsData = [
   {
-    id: 1,
+  id: 1,
+  title: 'Manos AI – Modular Adaptive Learning System',
+  summary: 'Local-first AI system for transforming content into adaptive learning',
+  description:
+    'Manos AI (Modular Adaptive Network Orchestrating System) is a local-first AI learning platform that converts unstructured content like PDFs into structured knowledge and adaptive learning experiences. It features a full pipeline including content extraction, context-aware chunking, embedding generation, Q&A creation, and flashcard-based learning with spaced repetition. The system uses modular, instance-based architecture where each subject acts as an independent learning module with its own knowledge base, performance tracking, and adaptive scheduling.',
+  image: 'https://mihcm.com/wp-content/uploads/2024/12/Agentic-AI-the-new-breakthrough.webp',
+  technologies: [
+    'Python',
+    'FastAPI',
+    'PostgreSQL',
+    'React',
+    'Vite',
+    'Tailwind CSS',
+    'Ollama',
+    'LLaMA3',
+    'DeepSeek',
+    'Phi-3',
+    'Nomic Embeddings',
+    'PyMuPDF'
+  ],
+  githubUrl: '', // add your repo link here
+  liveUrl: '',
+},
+  {
+    id: 2,
     title: 'NewStack AI',
     summary: 'An AI news aggregator and summarization platform',
     description:
@@ -17,7 +41,7 @@ const projectsData = [
   },
   
   {
-    id: 2,
+    id: 3,
     title: 'Stable Diffusion Project – Text-to-Image Generation',
     summary: 'Latent diffusion-based text-to-image generation system',
     description:
@@ -28,7 +52,7 @@ const projectsData = [
     liveUrl: 'https://huggingface.co/spaces/THEGODX/Text-To-Image-Generation',
   },
   {
-    id: 3,
+    id: 4,
     title: 'Voyage AI – Intelligent Trip Planner Agent',
     summary: 'Autonomous AI agent for smart travel planning',
     description:
@@ -40,7 +64,7 @@ const projectsData = [
   },
 
   {
-    id: 4,
+    id: 5,
     title: 'Denoising Diffusion Probabilistic Models (DDPM) – Paper Implementation',
     summary: 'From-scratch implementation of DDPM for image generation',
     description:
@@ -53,7 +77,7 @@ const projectsData = [
 
   
  {
-  id: 5,
+  id: 6,
   title: 'Next AI System – Coming Soon',
   summary: 'Currently building something impactful in AI',
   description:
