@@ -9,7 +9,7 @@ const roles = [
   'AI/ML Enthusiast',
   'Aspiring AI/ML Engineer',
   'M.Tech AI @NITJ',
-  'Global Rank 350 @TensorTonic',
+  'Global Rank 155 @TensorTonic',
   '300+ DSA Problem Solved',
   'Ranked 1844 on @GateOverflow (99.91 percentile)',
   'Top 32%  @LeetCode',
