@@ -113,7 +113,6 @@ const About = () => {
               { value: '350+', label: 'DSA Problems' },
               { value: '7+', label: 'Kaggle Competitions' },
               { value: '2+', label: 'Years in AI/ML' },
-              { value: '10+', label: 'Participated Hackathons' },
               { value: '2 times', label: 'Qualified GATE' },
               { value: 'top 32%', label: 'On LeetCode ' },
             ].map((stat, index) => (
