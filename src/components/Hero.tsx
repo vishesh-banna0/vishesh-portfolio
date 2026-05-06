@@ -4,15 +4,16 @@ import TypewriterText from './TypewriterText';
 import AnimatedProfileFrame from './AnimatedProfileFrame';
 
 const roles = [
+  'M.Tech AI @NITJ',
+  'Global Rank 143 @TensorTonic',
+  'Global Rank 1474 @deep-ml',
+  'Top 32%  @LeetCode',
+  'Ranked 1844 on @GateOverflow (99.91 percentile)',
+  '300+ DSA Problem Solved',
   'Generative AI Specialist',
   'Agentic AI & LLM Systems Practioner',
   'AI/ML Enthusiast',
   'Aspiring AI/ML Engineer',
-  'M.Tech AI @NITJ',
-  'Global Rank 155 @TensorTonic',
-  '300+ DSA Problem Solved',
-  'Ranked 1844 on @GateOverflow (99.91 percentile)',
-  'Top 32%  @LeetCode',
   'Diffusion Model Practitioner',
   'Kaggler'
 ];
