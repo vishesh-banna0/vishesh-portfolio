@@ -107,11 +107,12 @@ const About = () => {
             style={{ transitionDelay: '600ms' }}
           >
             {[
+              { value: '143', label: 'Global Rank @TensorTonic'},
+              { value: '1474', label: 'Global Rank @deep-ml'},
               { value: '6+', label: 'Projects Completed' },
-              { value: '350+', label: 'LeetCode Problems' },
+              { value: '350+', label: 'DSA Problems' },
               { value: '7+', label: 'Kaggle Competitions' },
               { value: '2+', label: 'Years in AI/ML' },
-              { value: '155', label: 'Global Rank @TensorTonic'},
               { value: '10+', label: 'Participated Hackathons' },
               { value: '2 times', label: 'Qualified GATE' },
               { value: 'top 32%', label: 'On LeetCode ' },
