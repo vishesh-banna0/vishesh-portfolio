@@ -10,7 +10,7 @@ const projectsData = [
     description:
       'Prospera.ai is an agentic financial intelligence platform that transforms market data into explainable investment intelligence. Built around a multi-environment market simulator and a centralized market data service, it provides the foundation for portfolio management, research, prediction models, backtesting, reinforcement learning agents, and autonomous financial decision-making. The backend follows Clean Architecture with modular bounded contexts, enabling future expansion into news intelligence, RAG, AI reasoning, and portfolio optimization.',
     image:
-      'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?q=80&w=1600&auto=format&fit=crop',
+      'https://corporatefinanceinstitute.com/resources/fpa/ai-agents-in-finance/',
     technologies: [
       'Python',
       'FastAPI',
