@@ -1,0 +1,163 @@
+// Prisma 7 — engine-free client via the pg driver adapter (see prisma.config.ts
+// for the migrate datasource, and src/lib/prisma.ts for the runtime adapter).
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ── Auth ── env-based today, but the model is schema-ready for multi-user.
+enum Role {
+  ADMIN
+  EDITOR
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String?
+  role         Role     @default(ADMIN)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+// ── Hero / profile (single row) ──
+model Profile {
+  id           String   @id @default(cuid())
+  name         String
+  role         String
+  location     String
+  email        String
+  resumeUrl    String
+  currently    String
+  thesis       String
+  githubUrl    String
+  linkedinUrl  String
+  githubHandle String
+  updatedAt    DateTime @updatedAt
+}
+
+// Typewriter lines — the CRUD list the user asked for.
+model TypewriterRole {
+  id    String @id @default(cuid())
+  text  String
+  order Int    @default(0)
+}
+
+// Headline stats (ranks / counts) — CRUD list.
+model Stat {
+  id    String @id @default(cuid())
+  value String
+  label String
+  order Int    @default(0)
+}
+
+// ── About (single row); nested lists kept inline for simpler editing ──
+model About {
+  id         String   @id @default(cuid())
+  lede       String
+  paragraphs String[]
+  focus      String[]
+  spec       Json // [{ "key": string, "value": string }]
+  updatedAt  DateTime @updatedAt
+}
+
+enum ProjectStatus {
+  SHIPPED
+  RESEARCH
+  BUILDING
+}
+
+model Project {
+  id          String        @id @default(cuid())
+  slug        String        @unique
+  title       String
+  summary     String
+  description String
+  stack       String[]
+  githubUrl   String?
+  liveUrl     String?
+  featured    Boolean       @default(false)
+  status      ProjectStatus @default(SHIPPED)
+  year        String?
+  order       Int           @default(0)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+}
+
+model Education {
+  id          String @id @default(cuid())
+  degree      String
+  institution String
+  shortName   String
+  period      String
+  location    String
+  cgpa        String
+  description String
+  order       Int    @default(0)
+}
+
+// Schema-ready for the CMS even though the current site has no entries yet.
+model Experience {
+  id           String   @id @default(cuid())
+  company      String
+  role         String
+  duration     String
+  description  String
+  achievements String[]
+  tech         String[]
+  logoUrl      String?
+  order        Int      @default(0)
+}
+
+model Skill {
+  id          String @id @default(cuid())
+  name        String
+  category    String
+  proficiency Int    @default(0)
+  order       Int    @default(0)
+}
+
+model WritingPost {
+  id      String  @id @default(cuid())
+  title   String
+  preview String
+  source  String
+  url     String?
+  order   Int     @default(0)
+}
+
+// ── Theme (single row); admin-controlled accent + motion ──
+model ThemeSetting {
+  id        String   @id @default(cuid())
+  brandH    Float    @default(38)
+  brandS    Int      @default(96)
+  brandL    Int      @default(56)
+  hueCycle  Boolean  @default(true)
+  radius    Float    @default(0.5)
+  extra     Json? // reserved for future presets (gradients, shadows, spacing)
+  updatedAt DateTime @updatedAt
+}
+
+model Media {
+  id        String   @id @default(cuid())
+  filename  String
+  url       String
+  mimeType  String
+  size      Int
+  alt       String?
+  createdAt DateTime @default(now())
+}
+
+model ContactMessage {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  message   String
+  read      Boolean  @default(false)
+  archived  Boolean  @default(false)
+  createdAt DateTime @default(now())
+}

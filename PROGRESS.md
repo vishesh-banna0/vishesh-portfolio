@@ -2,6 +2,34 @@
 
 Newest entries at the top. One short entry per phase. Read this first in any new session.
 
+## Phase 5 — Data layer (done)
+
+Postgres (Neon) + **Prisma 7** with the **pg driver adapter** (engine-free — the WASM
+query compiler works in this restricted-install environment where native engines don't).
+
+- **Schema** (`prisma/schema.prisma`): User (schema-ready), Profile, TypewriterRole, Stat,
+  About (paragraphs/focus/spec inline), Project (+ ProjectStatus enum), Education,
+  Experience, Skill, WritingPost, ThemeSetting, Media, ContactMessage.
+- **Prisma 7 specifics:** connection URL lives in `prisma.config.ts` (not the schema);
+  runtime client uses `PrismaPg` in `src/lib/prisma.ts`. Config uses `DIRECT_URL ??
+  DATABASE_URL` because migrations need a non-pooled connection.
+- **Seed** (`prisma/seed.ts`, run via `tsx`) loads the typed content module into the DB;
+  idempotent (clears then inserts). `db:generate/migrate/seed/studio` npm scripts added;
+  `postinstall: prisma generate` so Vercel regenerates the client.
+- **Verified against Neon:** migration applied, seed produced
+  `profile:1, roles:7, stats:6, projects:6, education:2, writing:2, theme:1, about:1`;
+  featured project = Prospera.ai. Typecheck clean. `.env` (real connection string) is
+  gitignored; migration history is committed.
+
+**Gotchas handled:** Prisma 7 moved the datasource URL out of the schema and requires a
+driver adapter; `env()` in the config throws on unset vars (load `.env` first, use
+`process.env`); the seed's `@next/env` needs a *named* import under tsx; tsx compiles to
+CJS so no top-level await in scripts.
+
+**Deferred/notes:** pg warns that `sslmode=require` is treated as `verify-full` (future pg
+v9 change) — fine for now. Components still read from the content module; Phase 6 switches
+them to the DB. Neon URL here is the direct endpoint; production will use the pooled one.
+
 ## Phase 4 — Auth (done)
 
 Env-based single-admin login exactly as the user asked — no public registration.
