@@ -31,7 +31,13 @@ without a redeploy.
   - `app/providers.tsx` — **client** wrapper for React Query / Tooltip / theme / toasters.
   - `app/globals.css` — the design system (was `src/index.css`).
 - `src/components/` — feature/section components (`Hero`, `About`, …) + `src/components/ui/` (shadcn).
+- `src/content/portfolio.ts` — **single source of truth for all site content** (profile,
+  typewriter roles, stats, about, projects, education, writing, nav). Components read from
+  here; nothing is hardcoded in JSX. This is the seam the CMS plugs into: Phase 5 seeds the
+  DB from these shapes, Phase 6 swaps components to read from the DB.
 - `src/hooks/`, `src/lib/` — shared hooks and utilities.
+- `scripts/screenshot.mjs` — Playwright breakpoint capture for visual QA (run the app, then
+  `node scripts/screenshot.mjs <outDir>`).
 - Path alias: `@/*` → `src/*` (set in `tsconfig.json`).
 
 ## Naming & code conventions

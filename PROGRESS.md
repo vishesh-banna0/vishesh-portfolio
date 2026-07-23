@@ -2,6 +2,30 @@
 
 Newest entries at the top. One short entry per phase. Read this first in any new session.
 
+## Phase 3 — Portfolio redesign (done)
+
+Rebuilt every section with a distinct layout on the "Signal from noise" system, verified
+at mobile/tablet/desktop via Playwright screenshots.
+
+- **Content centralized** into `src/content/portfolio.ts` (typed) — the CMS seam. Roles +
+  stats live here as the editable lists the admin will manage.
+- **Hero:** denoising canvas signature (noise → structure on load; "signal" dots pick up
+  the live drifting hue; reduced-motion-safe), name in Space Grotesk, typewriter, thesis,
+  CTAs, a profile "instrument panel," and a 6-up mono stat readout.
+- **About:** editorial narrative + a mono "datasheet" (spec + focus tags) — not a card grid.
+- **Work:** technical project index — featured Prospera.ai panel + a 2-col grid, mono tech
+  tags, restyled detail modal. Dropped the hotlinked stock images (link-rot + LCP win).
+- **Timeline:** a proper rail timeline with nodes (was image-cover cards).
+- **Writing:** a clean essay index. **Contact:** centered CTA + mono channel grid.
+- New Navbar (scrollspy + résumé), Footer (colophon). Section order now leads with work.
+- **Robust reveals:** `Reveal` guarantees visibility via a safety timer (never trapped at
+  opacity:0) and honors reduced motion. Removed Education/Blogs/AnimatedProfileFrame/
+  VSMonogram/useScrollAnimation. Build + typecheck green.
+
+**Placeholder to confirm:** `metadataBase` domain in `app/layout.tsx` is a guess — set the
+real production URL in the SEO/deploy phase. Contact is channels + mailto for now; the
+working form arrives with the data layer.
+
 ## Phase 2 — Design-token foundation (done)
 
 Replaced the templated cyan/purple glass system with **"Signal from noise"**: deep cool
