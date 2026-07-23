@@ -29,7 +29,7 @@ const plexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://visheshshekhawat.com"),
+  metadataBase: new URL(process.env.SITE_URL || "https://visheshshekhawat.com"),
   title: "Vishesh Shekhawat | ML / AI Systems Engineer",
   description:
     "Vishesh Shekhawat — ML/AI systems engineer (M.Tech AI, NIT Jalandhar). Building agentic systems, diffusion models, and LLM infrastructure from paper to production.",

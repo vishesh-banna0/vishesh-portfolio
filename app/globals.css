@@ -167,6 +167,25 @@
     border: 1px solid hsl(var(--border-strong) / 0.6);
   }
 
+  /* Skip-to-content link — visible only when focused */
+  .skip-link {
+    position: fixed;
+    top: 0.75rem;
+    left: 0.75rem;
+    z-index: 100;
+    transform: translateY(-160%);
+    transition: transform 0.2s ease;
+    background: hsl(var(--brand));
+    color: hsl(var(--brand-foreground));
+    padding: 0.5rem 0.9rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+  .skip-link:focus {
+    transform: translateY(0);
+  }
+
   /* Sticky navbar surface */
   .navbar-blur {
     background: hsl(var(--background) / 0.72);

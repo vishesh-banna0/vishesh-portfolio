@@ -2,6 +2,25 @@
 
 Newest entries at the top. One short entry per phase. Read this first in any new session.
 
+## Phase 9 — Polish (SEO + a11y) (done)
+
+- **SEO:** `app/robots.ts` (allow /, disallow /admin + /api) + `app/sitemap.ts`;
+  `generateMetadata` on the homepage derives title/description **from the DB profile**
+  (so editing the profile updates SEO — no separate settings model needed) + canonical;
+  JSON-LD `Person` schema; dynamic OG image (`app/opengraph-image.tsx`, rendered
+  on-request to dodge a @vercel/og Windows-build issue). `SITE_URL` env drives absolute
+  URLs. Removed the stale Vite `robots.txt` + `placeholder.svg`.
+- **a11y:** skip-to-content link; global focus-visible outline + reduced-motion floor
+  (from Phase 2); nav/contact ARIA labels; denoise canvas `aria-hidden`; `<html lang>`.
+- **Verified:** robots.txt/sitemap.xml serve correctly; homepage carries JSON-LD +
+  canonical + OG tags; final responsive pass at mobile/tablet/desktop shows no regressions.
+
+**Deferred/notes:** Lighthouse not run here (no Chrome+CLI in this env) — fundamentals are
+in place (semantic HTML, next/font, next/image hero, lazy reveals, minimal JS); run
+Lighthouse post-deploy. Public pages are `force-dynamic` for CMS freshness — could add ISR
++ on-demand revalidation later for higher scores. A dedicated SEO-settings model (custom
+OG image, per-field overrides) is a future enhancement.
+
 ## Phase 8 — Media manager (done)
 
 Upload / list / delete / copy-URL behind a **storage-adapter interface**
