@@ -1,3 +1,5 @@
+'use client';
+
 import { useState } from 'react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import ProjectModal from './ProjectModal';

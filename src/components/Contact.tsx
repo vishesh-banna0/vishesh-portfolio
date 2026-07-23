@@ -1,3 +1,5 @@
+'use client';
+
 import { Mail, Linkedin, MapPin } from 'lucide-react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
