@@ -1,53 +1,29 @@
 'use client';
 
-import VSMonogram from './VSMonogram';
-
-const footerLinks = [
-  { name: 'About', href: '#about' },
-  { name: 'Education', href: '#education' },
-  { name: 'Projects', href: '#projects' },
-  { name: 'Blogs', href: '#blogs' },
-  { name: 'Contact', href: '#contact' },
-];
+import { nav } from '@/content/portfolio';
 
 const Footer = () => {
-  const handleNavClick = (href: string) => {
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
+  const go = (href: string) => document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
 
   return (
-    <footer className="py-12 border-t border-border">
-      <div className="container mx-auto px-6">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-8">
-          {/* Logo */}
-          <div className="flex items-center gap-3">
-            <VSMonogram />
-            <span className="text-foreground font-semibold">Vishesh Shekhawat</span>
-          </div>
-
-          {/* Navigation */}
-          <nav className="flex flex-wrap justify-center gap-6">
-            {footerLinks.map((link) => (
-              <button
-                key={link.name}
-                onClick={() => handleNavClick(link.href)}
-                className="text-muted-foreground hover:text-primary transition-colors text-sm"
-              >
-                {link.name}
-              </button>
-            ))}
-          </nav>
+    <footer className="border-t border-border py-10">
+      <div className="container flex flex-col items-center justify-between gap-6 md:flex-row">
+        <div className="flex items-center gap-2.5">
+          <span className="grid h-6 w-6 place-items-center rounded bg-brand font-display text-xs font-bold text-brand-foreground">
+            V
+          </span>
+          <span className="text-sm text-muted-foreground">© 2026 Vishesh Shekhawat</span>
         </div>
 
-        {/* Copyright */}
-        <div className="mt-8 pt-8 border-t border-border/50 text-center">
-          <p className="text-muted-foreground text-sm">
-            © 2026 Vishesh Banna. All Rights Reserved.
-          </p>
-        </div>
+        <nav className="flex flex-wrap justify-center gap-x-5 gap-y-2">
+          {nav.map((l) => (
+            <button key={l.href} onClick={() => go(l.href)} className="mono-label hover:!text-foreground">
+              {l.label}
+            </button>
+          ))}
+        </nav>
+
+        <div className="mono-label !text-[0.62rem]">Built with Next.js · Tailwind</div>
       </div>
     </footer>
   );

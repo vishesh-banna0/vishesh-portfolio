@@ -1,111 +1,71 @@
 'use client';
 
-import { Mail, Linkedin, MapPin } from 'lucide-react';
-import { useScrollAnimation } from '@/hooks/useScrollAnimation';
+import { Mail, Github, Linkedin, MapPin } from 'lucide-react';
+import { Reveal } from './Reveal';
+import { profile } from '@/content/portfolio';
+
+const channels = [
+  { label: 'Email', value: profile.email, href: `mailto:${profile.email}`, icon: Mail },
+  { label: 'GitHub', value: `@${profile.githubHandle}`, href: profile.socials.github, icon: Github },
+  { label: 'LinkedIn', value: 'vishesh-shekhawat', href: profile.socials.linkedin, icon: Linkedin },
+  { label: 'Location', value: profile.location, href: undefined, icon: MapPin },
+];
 
 const Contact = () => {
-  const { ref, isVisible } = useScrollAnimation();
-
   return (
-    <section id="contact" className="py-20 md:py-32 relative">
-      {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-t from-primary/5 to-transparent" />
-
-      <div className="container mx-auto px-6 relative">
-        <div ref={ref}>
-          <h2
-            className={`section-title text-center mb-4 transition-all duration-700 ${
-              isVisible
-                ? 'opacity-100 translate-y-0'
-                : 'opacity-0 translate-y-10'
-            }`}
-          >
-            Contact Me
-          </h2>
-
-          <p
-            className={`text-muted-foreground text-center mb-12 max-w-2xl mx-auto transition-all duration-700 ${
-              isVisible
-                ? 'opacity-100 translate-y-0'
-                : 'opacity-0 translate-y-10'
-            }`}
-            style={{ transitionDelay: '100ms' }}
-          >
-            Have a project in mind or want to collaborate? Feel free to reach out!
-          </p>
-
-          {/* Contact Cards */}
-          <div className="flex flex-col md:flex-row gap-6 justify-center items-stretch max-w-3xl mx-auto">
-            
-            {/* Email */}
-            <a
-              href="mailto:visheshbanna0@outlook.com"
-              className={`glass-card p-6 flex items-center gap-4 flex-1 group transition-all duration-500 hover:scale-[1.02] ${
-                isVisible
-                  ? 'opacity-100 translate-y-0'
-                  : 'opacity-0 translate-y-10'
-              }`}
-              style={{ transitionDelay: '200ms' }}
-            >
-              <div className="p-3 rounded-lg bg-primary/10 text-primary group-hover:glow-primary transition-all">
-                <Mail size={24} />
-              </div>
-
-              <div className="min-w-0">
-                <h3 className="font-semibold text-foreground">Email</h3>
-                <p className="text-muted-foreground text-sm break-words">
-                  visheshbanna0@outlook.com
-                </p>
-              </div>
+    <section id="contact" className="relative py-20 md:py-28">
+      <div className="container">
+        <div className="mx-auto max-w-3xl text-center">
+          <Reveal>
+            <span className="eyebrow justify-center">Contact</span>
+          </Reveal>
+          <Reveal delay={70}>
+            <h2 className="section-title mt-4 text-3xl md:text-5xl">Let&rsquo;s build something that lasts.</h2>
+          </Reveal>
+          <Reveal delay={130}>
+            <p className="mx-auto mt-4 max-w-xl text-muted-foreground">
+              Open to research and engineering roles, collaborations, and genuinely hard problems.
+              The fastest way to reach me is email.
+            </p>
+          </Reveal>
+          <Reveal delay={190}>
+            <a href={`mailto:${profile.email}`} className="btn-primary mt-8 inline-flex">
+              <Mail size={18} /> {profile.email}
             </a>
-
-            {/* LinkedIn */}
-            <a
-              href="https://linkedin.com/in/vishesh-shekhawat"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={`glass-card p-6 flex items-center gap-4 flex-1 group transition-all duration-500 hover:scale-[1.02] ${
-                isVisible
-                  ? 'opacity-100 translate-y-0'
-                  : 'opacity-0 translate-y-10'
-              }`}
-              style={{ transitionDelay: '300ms' }}
-            >
-              <div className="p-3 rounded-lg bg-primary/10 text-primary group-hover:glow-primary transition-all">
-                <Linkedin size={24} />
-              </div>
-
-              <div>
-                <h3 className="font-semibold text-foreground">LinkedIn</h3>
-                <p className="text-muted-foreground text-sm">
-                  Connect with me
-                </p>
-              </div>
-            </a>
-
-            {/* Location */}
-            <div
-              className={`glass-card p-6 flex items-center gap-4 flex-1 transition-all duration-500 ${
-                isVisible
-                  ? 'opacity-100 translate-y-0'
-                  : 'opacity-0 translate-y-10'
-              }`}
-              style={{ transitionDelay: '400ms' }}
-            >
-              <div className="p-3 rounded-lg bg-primary/10 text-primary">
-                <MapPin size={24} />
-              </div>
-
-              <div>
-                <h3 className="font-semibold text-foreground">Location</h3>
-                <p className="text-muted-foreground text-sm">
-                  Jalandhar, Punjab, India
-                </p>
-              </div>
-            </div>
-
-          </div>
+          </Reveal>
         </div>
+
+        <Reveal delay={120}>
+          <div className="mx-auto mt-14 grid max-w-3xl gap-px overflow-hidden rounded-lg border border-border bg-border sm:grid-cols-2 lg:grid-cols-4">
+            {channels.map((c) => {
+              const Icon = c.icon;
+              const content = (
+                <>
+                  <Icon size={18} className="text-brand" />
+                  <div className="mono-label mt-3">{c.label}</div>
+                  <div className="mt-1 truncate text-sm text-foreground transition-colors group-hover:text-brand">
+                    {c.value}
+                  </div>
+                </>
+              );
+              return c.href ? (
+                <a
+                  key={c.label}
+                  href={c.href}
+                  target={c.href.startsWith('http') ? '_blank' : undefined}
+                  rel="noopener noreferrer"
+                  className="group bg-background px-5 py-5 transition-colors hover:bg-surface/60"
+                >
+                  {content}
+                </a>
+              ) : (
+                <div key={c.label} className="group bg-background px-5 py-5">
+                  {content}
+                </div>
+              );
+            })}
+          </div>
+        </Reveal>
       </div>
     </section>
   );

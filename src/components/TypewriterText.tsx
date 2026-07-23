@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
 
 interface TypewriterTextProps {
   texts: string[];
@@ -9,43 +10,52 @@ interface TypewriterTextProps {
   pauseDuration?: number;
 }
 
-const TypewriterText = ({ 
-  texts, 
-  typingSpeed = 100, 
-  deletingSpeed = 50, 
-  pauseDuration = 2000 
+/** Types/deletes through a list of strings. Inherits its text color from the
+ *  parent. Under reduced motion it shows the first string, statically. */
+const TypewriterText = ({
+  texts,
+  typingSpeed = 90,
+  deletingSpeed = 45,
+  pauseDuration = 1800,
 }: TypewriterTextProps) => {
-  const [currentTextIndex, setCurrentTextIndex] = useState(0);
-  const [currentText, setCurrentText] = useState('');
-  const [isDeleting, setIsDeleting] = useState(false);
+  const reduced = usePrefersReducedMotion();
+  const [index, setIndex] = useState(0);
+  const [text, setText] = useState('');
+  const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
-    const currentFullText = texts[currentTextIndex];
-    
-    const timeout = setTimeout(() => {
-      if (!isDeleting) {
-        if (currentText.length < currentFullText.length) {
-          setCurrentText(currentFullText.slice(0, currentText.length + 1));
+    if (reduced) return;
+    const full = texts[index];
+    const timeout = setTimeout(
+      () => {
+        if (!deleting) {
+          if (text.length < full.length) {
+            setText(full.slice(0, text.length + 1));
+          } else {
+            setTimeout(() => setDeleting(true), pauseDuration);
+          }
+        } else if (text.length > 0) {
+          setText(full.slice(0, text.length - 1));
         } else {
-          setTimeout(() => setIsDeleting(true), pauseDuration);
+          setDeleting(false);
+          setIndex((prev) => (prev + 1) % texts.length);
         }
-      } else {
-        if (currentText.length > 0) {
-          setCurrentText(currentFullText.slice(0, currentText.length - 1));
-        } else {
-          setIsDeleting(false);
-          setCurrentTextIndex((prev) => (prev + 1) % texts.length);
-        }
-      }
-    }, isDeleting ? deletingSpeed : typingSpeed);
-
+      },
+      deleting ? deletingSpeed : typingSpeed,
+    );
     return () => clearTimeout(timeout);
-  }, [currentText, isDeleting, currentTextIndex, texts, typingSpeed, deletingSpeed, pauseDuration]);
+  }, [text, deleting, index, texts, typingSpeed, deletingSpeed, pauseDuration, reduced]);
+
+  if (reduced) {
+    return <span>{texts[0]}</span>;
+  }
 
   return (
-    <span className="text-primary">
-      {currentText}
-      <span className="animate-typewriter-cursor text-primary">|</span>
+    <span>
+      {text}
+      <span className="animate-typewriter-cursor" aria-hidden="true">
+        |
+      </span>
     </span>
   );
 };

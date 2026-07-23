@@ -1,158 +1,108 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
-import { Download, Mail, Linkedin, Github } from 'lucide-react';
+import Image from 'next/image';
+import { Download, Mail, Github, Linkedin, ArrowDown } from 'lucide-react';
 import TypewriterText from './TypewriterText';
-import AnimatedProfileFrame from './AnimatedProfileFrame';
-
-const roles = [
-  'M.Tech AI @NITJ',
-  'Global Rank 143 @TensorTonic',
-  'Global Rank 1474 @deep-ml',
-  'Top 32%  @LeetCode',
-  'Ranked 1844 on @GateOverflow (99.91 percentile)',
-  '300+ DSA Problem Solved',
-  'Generative AI Specialist',
-  'Agentic AI & LLM Systems Practioner',
-  'AI/ML Enthusiast',
-  'Aspiring AI/ML Engineer',
-  'Diffusion Model Practitioner',
-  'Kaggler'
-];
-
+import { DenoiseField } from './DenoiseField';
+import { profile, roles, stats } from '@/content/portfolio';
 
 const Hero = () => {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const heroRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      if (heroRef.current) {
-        const rect = heroRef.current.getBoundingClientRect();
-        const x = (e.clientX - rect.left - rect.width / 2) / rect.width;
-        const y = (e.clientY - rect.top - rect.height / 2) / rect.height;
-        setMousePosition({ x: x * 20, y: y * 20 });
-      }
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
-
-  const scrollToContact = () => {
-    const element = document.querySelector('#contact');
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
   return (
-    <section 
-      ref={heroRef}
-      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20"
-    >
-      {/* Background gradient */}
-      <div 
-        className="absolute inset-0 opacity-30"
-        style={{
-          background: `radial-gradient(circle at ${50 + mousePosition.x}% ${50 + mousePosition.y}%, hsl(195 100% 50% / 0.15) 0%, transparent 50%)`,
-        }}
-      />
-      
-      {/* Grid pattern */}
-      <div 
-        className="absolute inset-0 opacity-5"
-        style={{
-          backgroundImage: `linear-gradient(hsl(195 100% 50% / 0.3) 1px, transparent 1px),
-                           linear-gradient(90deg, hsl(195 100% 50% / 0.3) 1px, transparent 1px)`,
-          backgroundSize: '50px 50px',
-        }}
-      />
+    <section id="home" className="relative flex min-h-screen items-center overflow-hidden pb-16 pt-28">
+      <DenoiseField className="pointer-events-none absolute inset-0 h-full w-full" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
 
-      <div className="container mx-auto px-6 flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
-        {/* Profile Image */}
-        <div 
-          className="relative"
-          style={{
-            transform: `translate(${mousePosition.x * 0.5}px, ${mousePosition.y * 0.5}px)`,
-            transition: 'transform 0.3s ease-out',
-          }}
-        >
-          <AnimatedProfileFrame 
-            imageUrl="/profile.jpeg" 
-            alt="Vishy"
-          />
+      <div className="container relative">
+        <div className="grid items-center gap-12 lg:grid-cols-[1.15fr_0.85fr]">
+          {/* Left — the statement */}
+          <div>
+            <span className="eyebrow animate-fade-in-up">ML / AI Systems Engineer</span>
+            <h1 className="mt-5 font-display text-5xl font-bold leading-[1.03] tracking-tight sm:text-6xl lg:text-[4.75rem]">
+              Vishesh
+              <br />
+              <span className="gradient-text">Shekhawat</span>
+            </h1>
+            <div className="mt-5 h-7 font-mono text-base text-brand sm:text-lg">
+              <TypewriterText texts={roles} />
+            </div>
+            <p className="mt-6 max-w-xl leading-relaxed text-muted-foreground">{profile.thesis}</p>
+
+            <div className="mt-8 flex flex-wrap items-center gap-3">
+              <a href={profile.resumeUrl} download className="btn-primary">
+                <Download size={18} /> Download CV
+              </a>
+              <a href="#contact" className="btn-secondary">
+                <Mail size={18} /> Get in touch
+              </a>
+              <div className="ml-1 flex items-center gap-1.5">
+                <a
+                  aria-label="GitHub"
+                  href={profile.socials.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="grid h-10 w-10 place-items-center rounded-md border border-border text-muted-foreground transition-colors hover:border-brand/50 hover:text-brand"
+                >
+                  <Github size={18} />
+                </a>
+                <a
+                  aria-label="LinkedIn"
+                  href={profile.socials.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="grid h-10 w-10 place-items-center rounded-md border border-border text-muted-foreground transition-colors hover:border-brand/50 hover:text-brand"
+                >
+                  <Linkedin size={18} />
+                </a>
+              </div>
+            </div>
+          </div>
+
+          {/* Right — profile as an instrument panel */}
+          <div className="relative mx-auto w-full max-w-sm">
+            <div className="panel overflow-hidden">
+              <div className="flex items-center justify-between border-b border-border px-4 py-2.5">
+                <span className="mono-label">profile.jpeg</span>
+                <span className="mono-label flex items-center gap-1.5 !text-brand">
+                  <span className="inline-block h-1.5 w-1.5 rounded-full bg-brand" /> live
+                </span>
+              </div>
+              <div className="relative aspect-square">
+                <Image
+                  src="/profile.jpeg"
+                  alt="Vishesh Shekhawat"
+                  fill
+                  sizes="(max-width: 1024px) 80vw, 360px"
+                  className="object-cover"
+                  priority
+                />
+                <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-brand/10" />
+              </div>
+              <div className="border-t border-border px-4 py-3">
+                <div className="mono-label !text-brand">{profile.role}</div>
+                <div className="mt-1 text-sm text-muted-foreground">{profile.currently}</div>
+              </div>
+            </div>
+          </div>
         </div>
 
-        {/* Content */}
-        <div 
-          className="flex-1 text-center lg:text-left"
-          style={{
-            transform: `translate(${mousePosition.x * 0.3}px, ${mousePosition.y * 0.3}px)`,
-            transition: 'transform 0.3s ease-out',
-          }}
-        >
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-4">
-            <span className="text-foreground">Vishesh</span>{' '}
-            <span className="gradient-text">Shekhawat</span>
-          </h1>
-          
-          <div className="text-xl md:text-2xl mb-8 h-8">
-            <TypewriterText texts={roles} />
-          </div>
-
-          <p className="text-muted-foreground text-lg mb-8 max-w-xl">
-            I’m exploring the evolving world of AI and Generative AI with one goal to build systems that don’t just perform well, but genuinely make a difference.
-          </p>
-
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-8">
-            <a 
-              href="/vishesh_2026.pdf" 
-              download
-              className="btn-primary inline-flex items-center justify-center gap-2"
-            >
-              <Download size={20} />
-               Download CV
-            </a>
-
-            <button 
-              onClick={scrollToContact}
-              className="btn-secondary inline-flex items-center justify-center gap-2"
-            >
-              <Mail size={20} />
-              Contact Me
-            </button>
-          </div>
-
-          {/* Social Links */}
-          <div className="flex gap-4 justify-center lg:justify-start">
-            <a 
-              href="https://linkedin.com/in/vishesh-shekhawat" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="p-3 rounded-lg border border-border bg-card hover:border-primary hover:glow-primary transition-all duration-300"
-            >
-              <Linkedin size={24} className="text-muted-foreground hover:text-primary transition-colors" />
-            </a>
-            <a 
-              href="https://github.com/vishesh-banna0" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="p-3 rounded-lg border border-border bg-card hover:border-primary hover:glow-primary transition-all duration-300"
-            >
-              <Github size={24} className="text-muted-foreground hover:text-primary transition-colors" />
-            </a>
-          </div>
+        {/* Instrument readout — headline stats */}
+        <div className="mt-14 grid grid-cols-2 gap-px overflow-hidden rounded-lg border border-border bg-border md:grid-cols-3 lg:grid-cols-6">
+          {stats.map((s) => (
+            <div key={s.label} className="bg-background px-4 py-4">
+              <div className="font-display text-2xl font-semibold tracking-tight">{s.value}</div>
+              <div className="mono-label mt-1 !text-[0.6rem] leading-tight">{s.label}</div>
+            </div>
+          ))}
         </div>
       </div>
 
-      {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-float">
-        <div className="w-6 h-10 rounded-full border-2 border-muted-foreground flex justify-center pt-2">
-          <div className="w-1 h-2 bg-muted-foreground rounded-full animate-bounce" />
-        </div>
-      </div>
+      <a
+        href="#about"
+        aria-label="Scroll to About"
+        className="animate-float absolute bottom-6 left-1/2 -translate-x-1/2 text-muted-foreground transition-colors hover:text-brand"
+      >
+        <ArrowDown size={20} />
+      </a>
     </section>
   );
 };

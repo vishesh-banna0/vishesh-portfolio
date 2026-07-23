@@ -2,88 +2,110 @@
 
 import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
-import VSMonogram from './VSMonogram';
-
-const navLinks = [
-  { name: 'About', href: '#about' },
-  { name: 'Education', href: '#education' },
-  { name: 'Projects', href: '#projects' },
-  { name: 'Blogs', href: '#blogs' },
-  { name: 'Contact', href: '#contact' },
-];
+import { nav, profile } from '@/content/portfolio';
 
 const Navbar = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [active, setActive] = useState('');
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    const onScroll = () => setScrolled(window.scrollY > 16);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const handleNavClick = (href: string) => {
-    setIsMobileMenuOpen(false);
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
+  // Scrollspy — highlight the section currently in the viewport's middle band.
+  useEffect(() => {
+    const sections = nav
+      .map((n) => document.getElementById(n.href.slice(1)))
+      .filter(Boolean) as HTMLElement[];
+    if (!sections.length) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) setActive(e.target.id);
+        });
+      },
+      { rootMargin: '-45% 0px -50% 0px' },
+    );
+    sections.forEach((s) => io.observe(s));
+    return () => io.disconnect();
+  }, []);
+
+  const go = (href: string) => {
+    setOpen(false);
+    document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
-    <nav 
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? 'navbar-blur py-4' : 'py-6'
+    <nav
+      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
+        scrolled ? 'navbar-blur py-3' : 'py-5'
       }`}
     >
-      <div className="container mx-auto px-6 flex items-center justify-between">
-        {/* Logo */}
-        <a href="#" className="flex items-center gap-2">
-          <VSMonogram />
+      <div className="container flex items-center justify-between">
+        <a
+          href="#home"
+          onClick={(e) => {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
+          className="flex items-center gap-2.5"
+        >
+          <span className="grid h-7 w-7 place-items-center rounded-[5px] bg-brand font-display text-sm font-bold text-brand-foreground">
+            V
+          </span>
+          <span className="font-display text-sm font-semibold tracking-tight">Vishesh Shekhawat</span>
         </a>
 
-        {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center gap-8">
-          {navLinks.map((link) => (
-            <button
-              key={link.name}
-              onClick={() => handleNavClick(link.href)}
-              className="relative text-muted-foreground hover:text-foreground transition-colors duration-300 group"
-            >
-              {link.name}
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-primary group-hover:w-full transition-all duration-300" />
-            </button>
-          ))}
+        <div className="hidden items-center gap-1 md:flex">
+          {nav.map((link) => {
+            const isActive = active === link.href.slice(1);
+            return (
+              <button
+                key={link.href}
+                onClick={() => go(link.href)}
+                className={`mono-label rounded px-3 py-2 transition-colors ${
+                  isActive ? '!text-brand' : 'hover:!text-foreground'
+                }`}
+              >
+                {link.label}
+              </button>
+            );
+          })}
+          <a href={profile.resumeUrl} download className="btn-secondary ml-2 !px-4 !py-2 text-sm">
+            Résumé
+          </a>
         </div>
 
-        {/* Mobile Menu Button */}
         <button
-          className="md:hidden text-foreground p-2"
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          className="text-foreground md:hidden"
+          onClick={() => setOpen(!open)}
+          aria-label="Toggle menu"
+          aria-expanded={open}
         >
-          {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          {open ? <X size={22} /> : <Menu size={22} />}
         </button>
       </div>
 
-      {/* Mobile Menu */}
-      <div 
-        className={`md:hidden absolute top-full left-0 right-0 navbar-blur transition-all duration-300 overflow-hidden ${
-          isMobileMenuOpen ? 'max-h-64 opacity-100' : 'max-h-0 opacity-0'
-        }`}
+      <div
+        className={`overflow-hidden transition-all duration-300 md:hidden ${open ? 'max-h-96' : 'max-h-0'}`}
       >
-        <div className="container mx-auto px-6 py-4 flex flex-col gap-4">
-          {navLinks.map((link, index) => (
+        <div className="container flex flex-col gap-1 border-t border-border bg-background/95 py-4 backdrop-blur">
+          {nav.map((link) => (
             <button
-              key={link.name}
-              onClick={() => handleNavClick(link.href)}
-              className="text-left text-muted-foreground hover:text-foreground transition-colors duration-300 animate-slide-down"
-              style={{ animationDelay: `${index * 50}ms` }}
+              key={link.href}
+              onClick={() => go(link.href)}
+              className="mono-label py-2 text-left hover:!text-foreground"
             >
-              {link.name}
+              {link.label}
             </button>
           ))}
+          <a href={profile.resumeUrl} download className="btn-secondary mt-2 justify-center">
+            Résumé
+          </a>
         </div>
       </div>
     </nav>
