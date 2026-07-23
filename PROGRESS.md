@@ -2,6 +2,24 @@
 
 Newest entries at the top. One short entry per phase. Read this first in any new session.
 
+## Phase 6b — Admin CMS core (done)
+
+CRUD for all visible content, built on **Next.js server actions** (each guarded by
+`requireAdmin()`, then `revalidatePath('/')` so edits publish immediately).
+
+- `src/lib/admin-actions.ts` — create/update/delete/reorder for Roles, Stats, Education,
+  Writing, Projects; single-row save for Hero/Profile and About. Generic `reorder` helper.
+- Admin pages under `app/admin/(dashboard)/{hero,about,projects,education,writing,roles,
+  stats}` — server components with inline forms; shared controls in
+  `src/components/admin/controls.tsx`. Sidebar nav updated.
+- **Loop verified with Playwright:** logged in, added a stat in the admin, and the public
+  homepage rendered it (`stat on homepage: true`); screenshotted the Stats + Projects
+  editors; cleaned up the test row. Build + typecheck green.
+
+**Deferred/notes:** the "add" forms keep their typed values after submit (uncontrolled
+inputs) — cosmetic, fix in polish. Experience & Skills models exist but have no site
+section/CRUD yet (schema-ready). Rich-text editor for long fields is plain textarea for now.
+
 ## Phase 6a — Public site reads from DB (done)
 
 Added `src/lib/queries.ts` (server-only) with one query per content type, each returning
