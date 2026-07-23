@@ -2,11 +2,29 @@
 
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { LayoutDashboard, LogOut, ExternalLink } from 'lucide-react';
+import {
+  LayoutDashboard,
+  LogOut,
+  ExternalLink,
+  User,
+  FileText,
+  FolderGit2,
+  GraduationCap,
+  PenLine,
+  Type,
+  BarChart3,
+} from 'lucide-react';
 
-// Phase 6 extends this with Projects / Experience / Skills / Timeline / Hero /
-// About / Theme / Media entries.
-const navItems = [{ href: '/admin', label: 'Overview', icon: LayoutDashboard }];
+const navItems = [
+  { href: '/admin', label: 'Overview', icon: LayoutDashboard },
+  { href: '/admin/hero', label: 'Hero / Profile', icon: User },
+  { href: '/admin/about', label: 'About', icon: FileText },
+  { href: '/admin/projects', label: 'Projects', icon: FolderGit2 },
+  { href: '/admin/education', label: 'Timeline', icon: GraduationCap },
+  { href: '/admin/writing', label: 'Writing', icon: PenLine },
+  { href: '/admin/roles', label: 'Roles', icon: Type },
+  { href: '/admin/stats', label: 'Stats', icon: BarChart3 },
+];
 
 export function AdminShell({ email, children }: { email: string; children: React.ReactNode }) {
   const pathname = usePathname();
