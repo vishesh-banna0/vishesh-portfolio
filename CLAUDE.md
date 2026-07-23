@@ -62,6 +62,18 @@ without a redeploy.
 - Tests run on **Vitest** (not Next's runner). `@vitejs/plugin-react-swc` + `vite` are kept
   in devDeps solely for the Vitest toolchain.
 
+## Auth (Phase 4)
+
+- **Single admin, env-based, no public registration.** Env vars: `ADMIN_EMAIL`,
+  `ADMIN_PASSWORD_HASH` (bcrypt), `AUTH_SECRET` (signs the session JWT).
+- **Runtime split — keep it:** `src/lib/session.ts` is edge-safe (jose only) and is the
+  only auth module middleware may import; `src/lib/auth.ts` uses bcryptjs and is node-only.
+  Do not import bcrypt into middleware.
+- `middleware.ts` gates `/admin/*`; dashboard layout re-checks the session too.
+- **Gotcha:** bcrypt hashes contain `$`; Next's `.env` loader expands `$…` as variables, so
+  in a local `.env` the hash must be escaped as `\$`. `npm run hash-password` prints both
+  the raw hash (for Vercel's env UI) and the escaped `.env` line.
+
 ## Commands
 
 - `npm run dev` — Next dev server (http://localhost:3000)

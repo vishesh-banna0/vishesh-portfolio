@@ -2,6 +2,30 @@
 
 Newest entries at the top. One short entry per phase. Read this first in any new session.
 
+## Phase 4 — Auth (done)
+
+Env-based single-admin login exactly as the user asked — no public registration.
+
+- **Split by runtime:** `src/lib/session.ts` (JWT via `jose`, edge-safe — imported by
+  middleware) vs `src/lib/auth.ts` (bcrypt credential check via `bcryptjs`, node-only).
+- **Flow:** `POST /api/auth/login` verifies `ADMIN_EMAIL` + `bcrypt.compare` against
+  `ADMIN_PASSWORD_HASH`, issues a signed JWT in an httpOnly/secure/sameSite cookie;
+  `middleware.ts` gates `/admin/*` (and bounces logged-in users off `/admin/login`);
+  `POST /api/auth/logout` clears it. Basic in-memory rate limit on login.
+- **UI:** styled login page + protected dashboard shell (`AdminShell`) with sign-out;
+  whole `/admin` area is `noindex`. Dashboard layout re-checks the session (defense depth).
+- **DX:** `npm run hash-password` prints the bcrypt hash (raw + a `.env`-escaped line).
+  `.env.example` documents the vars; `.env` is gitignored.
+- **Tests:** `session.test.ts` + `auth.test.ts` (10 pass; run in node env via
+  `// @vitest-environment node`; fixed `setup.ts` to guard `window`).
+- **Verified end to end** with curl: redirect when unauthenticated, 401 on bad password,
+  200 + cookie on success, dashboard reachable, logout works. Login + dashboard
+  screenshotted.
+
+**Gotcha found & handled:** bcrypt hashes contain `$`, which Next's `.env` loader expands
+as variables — a local `.env` must escape them as `\$` (Vercel's env UI takes the raw hash).
+The hash-password script and `.env.example` now spell this out.
+
 ## Phase 3 — Portfolio redesign (done)
 
 Rebuilt every section with a distinct layout on the "Signal from noise" system, verified
