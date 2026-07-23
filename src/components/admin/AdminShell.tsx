@@ -14,6 +14,7 @@ import {
   Type,
   BarChart3,
   Palette,
+  Image as ImageIcon,
 } from 'lucide-react';
 
 const navItems = [
@@ -25,6 +26,7 @@ const navItems = [
   { href: '/admin/writing', label: 'Writing', icon: PenLine },
   { href: '/admin/roles', label: 'Roles', icon: Type },
   { href: '/admin/stats', label: 'Stats', icon: BarChart3 },
+  { href: '/admin/media', label: 'Media', icon: ImageIcon },
   { href: '/admin/theme', label: 'Theme', icon: Palette },
 ];
 

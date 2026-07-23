@@ -2,6 +2,24 @@
 
 Newest entries at the top. One short entry per phase. Read this first in any new session.
 
+## Phase 8 — Media manager (done)
+
+Upload / list / delete / copy-URL behind a **storage-adapter interface**
+(`src/lib/storage.ts`) so cloud storage is a config swap, not a rewrite.
+
+- `uploadMedia` / `deleteMedia` server actions (guarded); records in the `Media` table.
+- `/admin/media`: client `Uploader` (validates type + 8 MB), thumbnail grid, `CopyButton`,
+  delete. Nav updated.
+- **Local adapter writes to a private `uploads/` dir** (gitignored) served via
+  `app/media/[file]/route.ts` — works under both `next dev` and `next start` (unlike
+  `public/`, which Next snapshots at build). Path-traversal guarded.
+- **Verified:** uploaded an image via the admin → appeared in the grid → `GET /media/…`
+  returns 200. Cleaned up the test asset.
+
+**Important for production:** the local FS adapter is dev-only — Vercel's filesystem is
+read-only. Swap `getStorage()` to a cloud adapter (Vercel Blob / S3) for production; the
+`Media.url` + route indirection means stored records keep working. Flagged for Phase 10.
+
 ## Phase 7 — Theme customizer (done)
 
 Admin-controlled accent + motion, applied site-wide with no redeploy.

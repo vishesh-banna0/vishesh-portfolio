@@ -22,6 +22,9 @@ next-env.d.ts
 .env
 .env*.local
 
+# Uploaded media (local storage adapter)
+/uploads/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
