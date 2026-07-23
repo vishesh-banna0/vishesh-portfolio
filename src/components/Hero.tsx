@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useEffect, useRef } from 'react';
 import { Download, Mail, Linkedin, Github } from 'lucide-react';
 import TypewriterText from './TypewriterText';

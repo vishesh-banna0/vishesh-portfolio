@@ -1,3 +1,5 @@
+'use client';
+
 import VSMonogram from './VSMonogram';
 
 const footerLinks = [

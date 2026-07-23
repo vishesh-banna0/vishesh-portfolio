@@ -1,3 +1,5 @@
+'use client';
+
 import { GraduationCap, Calendar, MapPin } from 'lucide-react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 

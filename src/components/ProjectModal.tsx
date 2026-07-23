@@ -1,3 +1,5 @@
+'use client';
+
 import { X, Github, ExternalLink } from 'lucide-react';
 import { useEffect } from 'react';
 

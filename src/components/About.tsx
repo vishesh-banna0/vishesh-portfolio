@@ -1,3 +1,5 @@
+'use client';
+
 import { Code, Brain, Lightbulb, Target } from 'lucide-react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
