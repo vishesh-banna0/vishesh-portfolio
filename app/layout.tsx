@@ -1,40 +1,55 @@
 import type { Metadata } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import { Space_Grotesk, IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
 
-const inter = Inter({
+// Display voice — geometric, technical, distinct from the Inter/Geist default.
+const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700", "800"],
-  variable: "--font-inter",
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-display",
   display: "swap",
 });
 
-const jetbrainsMono = JetBrains_Mono({
+// Body — engineering-grade humanist sans (the working text).
+const plexSans = IBM_Plex_Sans({
   subsets: ["latin"],
-  weight: ["400", "500"],
-  variable: "--font-jetbrains-mono",
+  weight: ["400", "500", "600"],
+  variable: "--font-sans",
+  display: "swap",
+});
+
+// Mono — instrument readouts: labels, indices, data, tech tags.
+const plexMono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-mono",
   display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Vishesh Shekhawat | AI/ML Engineer Portfolio",
+  metadataBase: new URL("https://visheshshekhawat.com"),
+  title: "Vishesh Shekhawat | ML / AI Systems Engineer",
   description:
-    "Portfolio of Vishesh Shekhawat - AI/ML Enthusiast, M.Tech AI at NIT Jalandhar. Exploring the frontiers of artificial intelligence and machine learning.",
-  keywords: ["AI", "ML", "Machine Learning", "Deep Learning", "NIT Jalandhar", "Portfolio", "Developer"],
+    "Vishesh Shekhawat — ML/AI systems engineer (M.Tech AI, NIT Jalandhar). Building agentic systems, diffusion models, and LLM infrastructure from paper to production.",
+  keywords: ["AI", "ML", "Machine Learning", "Deep Learning", "Diffusion Models", "LLM", "Agents", "NIT Jalandhar", "Vishesh Shekhawat"],
   authors: [{ name: "Vishesh Shekhawat" }],
   icons: { icon: "/logo.svg" },
   openGraph: {
-    title: "Vishesh Shekhawat | AI/ML Engineer",
+    title: "Vishesh Shekhawat | ML / AI Systems Engineer",
     description:
-      "AI/ML Enthusiast building intelligent systems and exploring the frontiers of artificial intelligence.",
+      "Building agentic systems, diffusion models, and LLM infrastructure — from paper to production.",
     type: "website",
   },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable}`} suppressHydrationWarning>
+    <html
+      lang="en"
+      className={`${spaceGrotesk.variable} ${plexSans.variable} ${plexMono.variable} hue-cycle`}
+      suppressHydrationWarning
+    >
       <body>
         <Providers>{children}</Providers>
       </body>

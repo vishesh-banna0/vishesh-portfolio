@@ -2,6 +2,29 @@
 
 Newest entries at the top. One short entry per phase. Read this first in any new session.
 
+## Phase 2 — Design-token foundation (done)
+
+Replaced the templated cyan/purple glass system with **"Signal from noise"**: deep cool
+graphite base + a **single amber brand accent** that everything derives from. All accent
+color now flows from one hue triplet (`--brand-h/s/l`) — the theme customizer (Phase 7)
+will only need to change that. Registered `--brand-h` as a typed `@property` and added a
+slow, reduced-motion-safe **hue drift (amber → violet)** — the user's "dark+orange to
+dark+violet" ask — gated behind `.hue-cycle` on `<html>` so it can be frozen later.
+New type system: **Space Grotesk** (display) + **IBM Plex Sans** (body) + **IBM Plex
+Mono** (instrument-style labels/data), via `next/font`. New utility primitives
+(`.eyebrow`, `.panel`, `.mono-label`, `.tag`, `.hairline`) and a global
+`prefers-reduced-motion` floor + keyboard focus-visible floor. Tailwind exposes brand /
+surface tokens with alpha slots. Builds clean.
+
+**Note (for Phase 5/6):** typewriter roles + stats (ranks, DSA count) confirmed as
+admin-CRUD content — model Hero with an editable roles list + stats list. In Phase 3 the
+hardcoded content moves into a typed `src/content/` module to create a clean seam for the
+DB later.
+
+**Deferred to Phase 3:** the section markup still uses the old layouts; a few inline
+cyan literals remain in Hero/monogram/card glows and get removed when those components
+are rewritten.
+
 ## Phase 1 — Next.js migration (done)
 
 Migrated the Vite + React Router SPA to **Next.js 14 App Router** with no visual/content
