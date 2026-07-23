@@ -76,8 +76,8 @@ const Navbar = ({ profile }: { profile: ProfileView }) => {
               </button>
             );
           })}
-          <a href={profile.resumeUrl} download className="btn-secondary ml-2 !px-4 !py-2 text-sm">
-            Résumé
+          <a href="/admin/login" className="btn-secondary ml-2 !px-4 !py-2 text-sm">
+            Admin Login
           </a>
         </div>
 
@@ -104,8 +104,8 @@ const Navbar = ({ profile }: { profile: ProfileView }) => {
               {link.label}
             </button>
           ))}
-          <a href={profile.resumeUrl} download className="btn-secondary mt-2 justify-center">
-            Résumé
+          <a href="/admin/login" className="btn-secondary mt-2 justify-center">
+            Admin Login
           </a>
         </div>
       </div>
