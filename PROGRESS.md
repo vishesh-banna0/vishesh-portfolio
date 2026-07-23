@@ -2,6 +2,21 @@
 
 Newest entries at the top. One short entry per phase. Read this first in any new session.
 
+## Phase 10 — Redeploy (prepared — awaiting user deploy actions)
+
+The app is **deploy-ready** (production build verified; `postinstall: prisma generate` for
+Vercel; DB reads fall back so the build never needs a live DB). Wrote **`DEPLOY.md`** with
+the full checklist. Remaining steps are user-driven (their Vercel account + secrets):
+
+1. Production Postgres — reuse the current Neon DB (schema+seed already applied) or a new
+   one (`prisma migrate deploy` + `db:seed`).
+2. Set Vercel env vars: `DATABASE_URL` (pooled), `DIRECT_URL` (direct), `AUTH_SECRET`,
+   `ADMIN_EMAIL`, `ADMIN_PASSWORD_HASH` (**raw** hash on Vercel), `SITE_URL`.
+3. **Media in prod:** swap `getStorage()` to a Vercel Blob adapter (code in DEPLOY.md) —
+   local FS is dev-only. Everything except uploads works without it.
+4. Merge `redesign-cms → main` (10 commits) → Vercel deploys production.
+5. Post-deploy: verify site + admin, run Lighthouse.
+
 ## Phase 9 — Polish (SEO + a11y) (done)
 
 - **SEO:** `app/robots.ts` (allow /, disallow /admin + /api) + `app/sitemap.ts`;
