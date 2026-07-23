@@ -3,9 +3,9 @@
 import { ArrowUpRight } from 'lucide-react';
 import { Reveal } from './Reveal';
 import { SectionHeader } from './Section';
-import { writing } from '@/content/portfolio';
+import type { WritingEntry } from '@/content/portfolio';
 
-const Writing = () => {
+const Writing = ({ writing }: { writing: WritingEntry[] }) => {
   return (
     <section id="writing" className="relative py-20 md:py-28">
       <div className="container">

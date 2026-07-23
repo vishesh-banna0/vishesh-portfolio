@@ -2,9 +2,9 @@
 
 import { Reveal } from './Reveal';
 import { SectionHeader } from './Section';
-import { about } from '@/content/portfolio';
+import type { AboutView } from '@/content/portfolio';
 
-const About = () => {
+const About = ({ about }: { about: AboutView }) => {
   return (
     <section id="about" className="relative py-20 md:py-28">
       <div className="container">

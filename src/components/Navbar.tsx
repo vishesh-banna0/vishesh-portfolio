@@ -2,9 +2,10 @@
 
 import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
-import { nav, profile } from '@/content/portfolio';
+import { nav } from '@/content/portfolio';
+import type { ProfileView } from '@/content/portfolio';
 
-const Navbar = () => {
+const Navbar = ({ profile }: { profile: ProfileView }) => {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState('');

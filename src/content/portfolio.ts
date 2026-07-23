@@ -213,6 +213,29 @@ export const writing: WritingEntry[] = [
   },
 ];
 
+// ── View types shared by the section components (widened from the consts above,
+//    and matched by the DB-backed queries in src/lib/queries.ts). ──
+export type ProfileView = {
+  name: string;
+  githubHandle: string;
+  role: string;
+  location: string;
+  email: string;
+  resumeUrl: string;
+  currently: string;
+  thesis: string;
+  socials: { github: string; linkedin: string };
+};
+
+export type StatView = { value: string; label: string };
+
+export type AboutView = {
+  lede: string;
+  paragraphs: readonly string[];
+  focus: readonly string[];
+  spec: readonly { k: string; v: string }[];
+};
+
 /** Public navigation — section order reflects what matters most for a systems engineer. */
 export const nav = [
   { label: "About", href: "#about" },

@@ -4,9 +4,9 @@ import { useState } from 'react';
 import { Reveal } from './Reveal';
 import { SectionHeader } from './Section';
 import ProjectModal from './ProjectModal';
-import { projects, type Project } from '@/content/portfolio';
+import type { Project } from '@/content/portfolio';
 
-const Projects = () => {
+const Projects = ({ projects }: { projects: Project[] }) => {
   const [selected, setSelected] = useState<Project | null>(null);
   const featured = projects.find((p) => p.featured);
   const rest = projects.filter((p) => !p.featured);

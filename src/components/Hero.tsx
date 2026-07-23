@@ -4,9 +4,15 @@ import Image from 'next/image';
 import { Download, Mail, Github, Linkedin, ArrowDown } from 'lucide-react';
 import TypewriterText from './TypewriterText';
 import { DenoiseField } from './DenoiseField';
-import { profile, roles, stats } from '@/content/portfolio';
+import type { ProfileView, StatView } from '@/content/portfolio';
 
-const Hero = () => {
+interface HeroProps {
+  profile: ProfileView;
+  roles: string[];
+  stats: StatView[];
+}
+
+const Hero = ({ profile, roles, stats }: HeroProps) => {
   return (
     <section id="home" className="relative flex min-h-screen items-center overflow-hidden pb-16 pt-28">
       <DenoiseField className="pointer-events-none absolute inset-0 h-full w-full" />

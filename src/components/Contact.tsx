@@ -2,16 +2,16 @@
 
 import { Mail, Github, Linkedin, MapPin } from 'lucide-react';
 import { Reveal } from './Reveal';
-import { profile } from '@/content/portfolio';
+import type { ProfileView } from '@/content/portfolio';
 
-const channels = [
-  { label: 'Email', value: profile.email, href: `mailto:${profile.email}`, icon: Mail },
-  { label: 'GitHub', value: `@${profile.githubHandle}`, href: profile.socials.github, icon: Github },
-  { label: 'LinkedIn', value: 'vishesh-shekhawat', href: profile.socials.linkedin, icon: Linkedin },
-  { label: 'Location', value: profile.location, href: undefined, icon: MapPin },
-];
+const Contact = ({ profile }: { profile: ProfileView }) => {
+  const channels = [
+    { label: 'Email', value: profile.email, href: `mailto:${profile.email}`, icon: Mail },
+    { label: 'GitHub', value: `@${profile.githubHandle}`, href: profile.socials.github, icon: Github },
+    { label: 'LinkedIn', value: 'vishesh-shekhawat', href: profile.socials.linkedin, icon: Linkedin },
+    { label: 'Location', value: profile.location, href: undefined, icon: MapPin },
+  ];
 
-const Contact = () => {
   return (
     <section id="contact" className="relative py-20 md:py-28">
       <div className="container">
