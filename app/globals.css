@@ -2,54 +2,83 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Futuristic Dark Portfolio Design System */
+/* ============================================================================
+   Design system — "Signal from noise"
+   Dark-only. A single brand accent (--brand-h/s/l) is the source of truth;
+   every accented color derives from it, so the theme customizer only has to
+   change the hue/sat/lightness triplet.
+   ========================================================================== */
+
+/* Registering --brand-h as a typed custom property lets it *interpolate*, so the
+   whole palette can drift through hues from one animated number. */
+@property --brand-h {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 38;
+}
+
+/* Ambient hue drift: amber -> red -> magenta -> violet and back. Everything that
+   derives from --brand-h shifts together. Opt-in via a class on <html> so the
+   theme customizer can freeze it on a fixed accent later. */
+@keyframes hue-drift {
+  from { --brand-h: 38; }
+  to { --brand-h: -85; } /* -85 === 275deg (violet) via the magenta side */
+}
+.hue-cycle {
+  animation: hue-drift 42s ease-in-out infinite alternate;
+}
 
 @layer base {
   :root {
-    --background: 220 20% 4%;
-    --foreground: 210 40% 98%;
+    /* ── Base surfaces: deep, cool graphite ── */
+    --background: 222 18% 5%;
+    --surface: 222 15% 8%;
+    --surface-2: 222 14% 11%;
+    --foreground: 210 22% 96%;
 
-    --card: 220 20% 8%;
-    --card-foreground: 210 40% 98%;
+    /* ── Text hierarchy ── */
+    --muted-foreground: 218 12% 62%;
+    --faint: 220 10% 40%;
 
-    --popover: 220 20% 6%;
-    --popover-foreground: 210 40% 98%;
+    /* ── Lines ── */
+    --border: 220 13% 15%;
+    --border-strong: 220 12% 24%;
 
-    --primary: 195 100% 50%;
-    --primary-foreground: 220 20% 4%;
+    /* ── Brand accent — SINGLE SOURCE OF TRUTH ──
+       Amber "signal" against cold graphite. Change these three lines (or the
+       whole triplet via --brand) to recolor the entire UI. */
+    --brand-h: 38;
+    --brand-s: 96%;
+    --brand-l: 56%;
+    --brand: var(--brand-h) var(--brand-s) var(--brand-l);
+    --brand-bright: var(--brand-h) var(--brand-s) 66%;
+    --brand-dim: var(--brand-h) calc(var(--brand-s) - 20%) 46%;
+    --brand-foreground: 36 45% 8%;
 
-    --secondary: 270 80% 60%;
-    --secondary-foreground: 210 40% 98%;
+    /* Derived, brand-driven decoration */
+    --gradient-brand: linear-gradient(135deg, hsl(var(--brand)), hsl(var(--brand-bright)));
+    --gradient-text: linear-gradient(100deg, hsl(var(--foreground)) 0%, hsl(var(--brand-bright)) 120%);
+    --glow-brand: 0 0 0 1px hsl(var(--brand) / 0.35), 0 8px 40px -8px hsl(var(--brand) / 0.35);
 
-    --muted: 220 15% 15%;
-    --muted-foreground: 215 20% 65%;
-
-    --accent: 195 100% 50%;
-    --accent-foreground: 220 20% 4%;
-
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 220 15% 18%;
-    --input: 220 15% 18%;
-    --ring: 195 100% 50%;
-
-    --radius: 0.75rem;
-
-    /* Custom Design Tokens */
-    --glow-primary: 195 100% 50%;
-    --glow-secondary: 270 80% 60%;
-    --glass-bg: 220 20% 10% / 0.6;
-    --glass-border: 220 15% 25% / 0.3;
-
-    --gradient-primary: linear-gradient(135deg, hsl(195 100% 50%), hsl(270 80% 60%));
-    --gradient-glow: linear-gradient(135deg, hsl(195 100% 50% / 0.3), hsl(270 80% 60% / 0.3));
-    --gradient-text: linear-gradient(135deg, hsl(195 100% 60%), hsl(270 80% 70%));
-  }
-
-  .dark {
-    --background: 220 20% 4%;
-    --foreground: 210 40% 98%;
+    /* ── shadcn/ui token bridge (so the generated ui/* components keep working).
+       Brand maps to `primary`; shadcn's own `accent` stays a neutral hover
+       surface, NOT the brand color. ── */
+    --card: var(--surface);
+    --card-foreground: var(--foreground);
+    --popover: var(--surface-2);
+    --popover-foreground: var(--foreground);
+    --primary: var(--brand);
+    --primary-foreground: var(--brand-foreground);
+    --secondary: 222 14% 13%;
+    --secondary-foreground: var(--foreground);
+    --muted: 222 12% 13%;
+    --accent: 222 12% 15%;
+    --accent-foreground: var(--foreground);
+    --destructive: 0 72% 55%;
+    --destructive-foreground: 210 22% 96%;
+    --input: 220 13% 16%;
+    --ring: var(--brand);
+    --radius: 0.5rem;
   }
 }
 
@@ -62,203 +91,201 @@
     scroll-behavior: smooth;
   }
 
+  /* Anchor targets clear the fixed navbar */
+  section[id] {
+    scroll-margin-top: 5rem;
+  }
+
   body {
     @apply bg-background text-foreground antialiased;
-    font-family: var(--font-inter), 'Inter', system-ui, -apple-system, sans-serif;
+    font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
+    font-feature-settings: "cv05" 1, "ss01" 1;
+  }
+
+  ::selection {
+    background: hsl(var(--brand) / 0.28);
+    color: hsl(var(--foreground));
+  }
+
+  /* Focus visibility floor — keyboard users always see where they are. */
+  :focus-visible {
+    outline: 2px solid hsl(var(--brand));
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display), var(--font-sans), sans-serif;
+    letter-spacing: -0.02em;
   }
 }
 
 @layer components {
-  /* Glassmorphism Card */
-  .glass-card {
-    @apply relative overflow-hidden rounded-xl;
-    background: hsl(var(--glass-bg));
-    backdrop-filter: blur(20px);
-    border: 1px solid hsl(var(--glass-border));
+  /* ── Instrument-readout label: the mono "voice" for eyebrows, indices, data ── */
+  .mono-label {
+    font-family: var(--font-mono), monospace;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: hsl(var(--muted-foreground));
   }
 
-  .glass-card::before {
-    content: '';
-    @apply absolute inset-0 opacity-0 transition-opacity duration-300;
-    background: linear-gradient(135deg, hsl(195 100% 50% / 0.1), hsl(270 80% 60% / 0.1));
+  /* Eyebrow with the signal tick */
+  .eyebrow {
+    @apply mono-label inline-flex items-center gap-2;
+    color: hsl(var(--brand));
+  }
+  .eyebrow::before {
+    content: "";
+    width: 1.5rem;
+    height: 1px;
+    background: hsl(var(--brand));
+    display: inline-block;
   }
 
-  .glass-card:hover::before {
-    @apply opacity-100;
+  /* Hairline rule */
+  .hairline {
+    height: 1px;
+    background: hsl(var(--border));
+    border: 0;
   }
 
-  /* Glow Effects */
-  .glow-primary {
-    box-shadow:
-      0 0 20px hsl(195 100% 50% / 0.3),
-      0 0 40px hsl(195 100% 50% / 0.2),
-      0 0 60px hsl(195 100% 50% / 0.1);
+  /* Quiet elevated panel (replaces the everywhere-glass card) */
+  .panel {
+    background: hsl(var(--surface));
+    border: 1px solid hsl(var(--border));
+    border-radius: var(--radius);
   }
 
-  .glow-secondary {
-    box-shadow:
-      0 0 20px hsl(270 80% 60% / 0.3),
-      0 0 40px hsl(270 80% 60% / 0.2);
+  /* Glass reserved for the few moments it earns its place */
+  .glass {
+    background: hsl(var(--surface) / 0.6);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid hsl(var(--border-strong) / 0.6);
   }
 
-  .glow-text {
-    text-shadow:
-      0 0 10px hsl(195 100% 50% / 0.5),
-      0 0 20px hsl(195 100% 50% / 0.3);
-  }
-
-  /* Gradient Text */
-  .gradient-text {
-    @apply bg-clip-text text-transparent;
-    background-image: var(--gradient-text);
-  }
-
-  /* Animated Border */
-  .animated-border {
-    @apply relative;
-  }
-
-  .animated-border::before {
-    content: '';
-    @apply absolute -inset-[2px] rounded-xl opacity-75;
-    background: var(--gradient-primary);
-    filter: blur(8px);
-    animation: pulse-glow 3s ease-in-out infinite;
-  }
-
-  /* Navbar Blur */
+  /* Sticky navbar surface */
   .navbar-blur {
-    @apply backdrop-blur-xl;
-    background: hsl(220 20% 4% / 0.8);
-    border-bottom: 1px solid hsl(var(--glass-border));
+    background: hsl(var(--background) / 0.72);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid hsl(var(--border));
   }
 
-  /* Button Variants */
+  /* Gradient text — brand-driven */
+  .gradient-text {
+    background-image: var(--gradient-text);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Brand tag / chip (tech stack) */
+  .tag {
+    font-family: var(--font-mono), monospace;
+    font-size: 0.72rem;
+    padding: 0.2rem 0.55rem;
+    border-radius: 4px;
+    border: 1px solid hsl(var(--border-strong));
+    color: hsl(var(--muted-foreground));
+    background: hsl(var(--surface-2) / 0.5);
+    white-space: nowrap;
+  }
+
+  /* Buttons */
   .btn-primary {
-    @apply relative overflow-hidden px-6 py-3 rounded-lg font-medium transition-all duration-300;
-    background: var(--gradient-primary);
-    color: hsl(var(--background));
+    @apply relative inline-flex items-center justify-center gap-2 rounded-md px-5 py-2.5 font-medium transition-all duration-200;
+    background: hsl(var(--brand));
+    color: hsl(var(--brand-foreground));
   }
-
   .btn-primary:hover {
-    @apply scale-105;
-    box-shadow:
-      0 0 30px hsl(195 100% 50% / 0.4),
-      0 0 60px hsl(270 80% 60% / 0.3);
+    background: hsl(var(--brand-bright));
+    box-shadow: 0 6px 30px -8px hsl(var(--brand) / 0.6);
   }
 
   .btn-secondary {
-    @apply px-6 py-3 rounded-lg font-medium transition-all duration-300;
-    border: 1px solid hsl(195 100% 50% / 0.5);
-    color: hsl(var(--primary));
-    background: hsl(195 100% 50% / 0.1);
+    @apply inline-flex items-center justify-center gap-2 rounded-md px-5 py-2.5 font-medium transition-all duration-200;
+    border: 1px solid hsl(var(--border-strong));
+    color: hsl(var(--foreground));
+    background: transparent;
   }
-
   .btn-secondary:hover {
-    @apply scale-105;
-    background: hsl(195 100% 50% / 0.2);
-    border-color: hsl(195 100% 50%);
-    box-shadow: 0 0 20px hsl(195 100% 50% / 0.3);
+    border-color: hsl(var(--brand) / 0.6);
+    color: hsl(var(--brand));
   }
 
-  /* Section Styles */
+  /* Section heading */
   .section-title {
-    @apply text-4xl md:text-5xl font-bold mb-4 gradient-text;
+    @apply text-3xl md:text-4xl font-semibold tracking-tight;
+    color: hsl(var(--foreground));
+  }
+
+  /* Legacy alias kept until Phase 3 rewrites the last references */
+  .glass-card {
+    @apply panel;
+  }
+  .glow-primary {
+    box-shadow: var(--glow-brand);
   }
 }
 
 @layer utilities {
-  /* Custom Animations */
-  @keyframes pulse-glow {
-    0%, 100% {
-      opacity: 0.5;
-    }
-    50% {
-      opacity: 0.8;
-    }
-  }
-
-  @keyframes rotate-gradient {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
-  }
-
   @keyframes float {
-    0%, 100% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-10px);
-    }
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
   }
-
   @keyframes typewriter-cursor {
-    0%, 100% {
-      opacity: 1;
-    }
-    50% {
-      opacity: 0;
-    }
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
   }
-
-  @keyframes draw-stroke {
-    0% {
-      stroke-dashoffset: 200;
-    }
-    100% {
-      stroke-dashoffset: 0;
-    }
-  }
-
   @keyframes fade-in-up {
-    0% {
-      opacity: 0;
-      transform: translateY(30px);
-    }
-    100% {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    0% { opacity: 0; transform: translateY(24px); }
+    100% { opacity: 1; transform: translateY(0); }
   }
-
   @keyframes scale-in {
-    0% {
-      opacity: 0;
-      transform: scale(0.9);
-    }
-    100% {
-      opacity: 1;
-      transform: scale(1);
-    }
+    0% { opacity: 0; transform: scale(0.96); }
+    100% { opacity: 1; transform: scale(1); }
+  }
+  @keyframes draw-stroke {
+    0% { stroke-dashoffset: 200; }
+    100% { stroke-dashoffset: 0; }
+  }
+  @keyframes rotate-gradient {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  @keyframes pulse-glow {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 0.85; }
   }
 
-  .animate-rotate-gradient {
-    animation: rotate-gradient 8s linear infinite;
-  }
-
-  .animate-float {
-    animation: float 4s ease-in-out infinite;
-  }
-
-  .animate-typewriter-cursor {
-    animation: typewriter-cursor 1s step-end infinite;
-  }
-
+  .animate-float { animation: float 4s ease-in-out infinite; }
+  .animate-typewriter-cursor { animation: typewriter-cursor 1s step-end infinite; }
+  .animate-fade-in-up { animation: fade-in-up 0.6s ease-out forwards; }
+  .animate-scale-in { animation: scale-in 0.28s ease-out forwards; }
+  .animate-rotate-gradient { animation: rotate-gradient 8s linear infinite; }
+  .animate-pulse-glow { animation: pulse-glow 3s ease-in-out infinite; }
   .animate-draw-stroke {
     stroke-dasharray: 200;
     stroke-dashoffset: 200;
     animation: draw-stroke 2s ease-out forwards;
   }
+}
 
-  .animate-fade-in-up {
-    animation: fade-in-up 0.6s ease-out forwards;
+/* ── Motion floor: honor the OS "reduce motion" setting everywhere ── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
   }
-
-  .animate-scale-in {
-    animation: scale-in 0.3s ease-out forwards;
+  /* Freeze the accent on the base amber for reduced-motion users. */
+  .hue-cycle {
+    animation: none !important;
   }
 }
