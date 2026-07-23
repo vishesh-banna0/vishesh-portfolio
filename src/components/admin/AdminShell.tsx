@@ -13,6 +13,7 @@ import {
   PenLine,
   Type,
   BarChart3,
+  Palette,
 } from 'lucide-react';
 
 const navItems = [
@@ -24,6 +25,7 @@ const navItems = [
   { href: '/admin/writing', label: 'Writing', icon: PenLine },
   { href: '/admin/roles', label: 'Roles', icon: Type },
   { href: '/admin/stats', label: 'Stats', icon: BarChart3 },
+  { href: '/admin/theme', label: 'Theme', icon: Palette },
 ];
 
 export function AdminShell({ email, children }: { email: string; children: React.ReactNode }) {

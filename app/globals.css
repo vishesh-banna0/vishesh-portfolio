@@ -17,12 +17,12 @@
   initial-value: 38;
 }
 
-/* Ambient hue drift: amber -> red -> magenta -> violet and back. Everything that
-   derives from --brand-h shifts together. Opt-in via a class on <html> so the
-   theme customizer can freeze it on a fixed accent later. */
+/* Ambient hue drift, RELATIVE to the chosen accent (--brand-h-base). At the default
+   amber base this is the amber -> violet drift; pick any accent and it anchors there.
+   Opt-in via a class on <html> so the theme customizer can freeze it. */
 @keyframes hue-drift {
-  from { --brand-h: 38; }
-  to { --brand-h: -85; } /* -85 === 275deg (violet) via the magenta side */
+  from { --brand-h: var(--brand-h-base); }
+  to { --brand-h: calc(var(--brand-h-base) - 123); } /* ~123deg toward violet */
 }
 .hue-cycle {
   animation: hue-drift 42s ease-in-out infinite alternate;
@@ -47,7 +47,8 @@
     /* ── Brand accent — SINGLE SOURCE OF TRUTH ──
        Amber "signal" against cold graphite. Change these three lines (or the
        whole triplet via --brand) to recolor the entire UI. */
-    --brand-h: 38;
+    --brand-h-base: 38;
+    --brand-h: var(--brand-h-base);
     --brand-s: 96%;
     --brand-l: 56%;
     --brand: var(--brand-h) var(--brand-s) var(--brand-l);

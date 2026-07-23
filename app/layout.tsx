@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Space_Grotesk, IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
+import { getTheme } from "@/lib/queries";
 
 // Display voice — geometric, technical, distinct from the Inter/Geist default.
 const spaceGrotesk = Space_Grotesk({
@@ -43,14 +44,20 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const theme = await getTheme();
+  // Admin-controlled accent + radius, applied site-wide with no redeploy. Unlayered
+  // :root here overrides the layered defaults in globals.css.
+  const themeVars = `:root{--brand-h-base:${theme.brandH};--brand-s:${theme.brandS}%;--brand-l:${theme.brandL}%;--radius:${theme.radius}rem;}`;
+
   return (
     <html
       lang="en"
-      className={`${spaceGrotesk.variable} ${plexSans.variable} ${plexMono.variable} hue-cycle`}
+      className={`${spaceGrotesk.variable} ${plexSans.variable} ${plexMono.variable}${theme.hueCycle ? " hue-cycle" : ""}`}
       suppressHydrationWarning
     >
       <body>
+        <style dangerouslySetInnerHTML={{ __html: themeVars }} />
         <Providers>{children}</Providers>
       </body>
     </html>
