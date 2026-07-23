@@ -3,7 +3,18 @@
 import { revalidatePath } from 'next/cache';
 import { prisma } from '@/lib/prisma';
 import { requireAdmin } from '@/lib/admin-auth';
+import { getStorage, keyFromUrl } from '@/lib/storage';
 import type { ProjectStatus } from '@prisma/client';
+
+const MAX_UPLOAD = 8 * 1024 * 1024; // 8 MB
+const ALLOWED_TYPES = [
+  'image/png',
+  'image/jpeg',
+  'image/webp',
+  'image/gif',
+  'image/svg+xml',
+  'application/pdf',
+];
 
 // Refresh the public site and the admin page after any change.
 function refresh(adminPath: string) {
@@ -274,4 +285,31 @@ export async function updateAbout(fd: FormData) {
   if (existing) await prisma.about.update({ where: { id: existing.id }, data });
   else await prisma.about.create({ data });
   refresh('/admin/about');
+}
+
+// ── Media ─────────────────────────────────────────────────────────
+export async function uploadMedia(fd: FormData) {
+  await requireAdmin();
+  const file = fd.get('file');
+  if (!(file instanceof File) || file.size === 0) return { error: 'No file selected.' };
+  if (file.size > MAX_UPLOAD) return { error: 'File too large (max 8 MB).' };
+  if (!ALLOWED_TYPES.includes(file.type)) return { error: 'Unsupported file type.' };
+
+  const buffer = Buffer.from(await file.arrayBuffer());
+  const { url } = await getStorage().save({ buffer, filename: file.name, mimeType: file.type });
+  await prisma.media.create({
+    data: { filename: file.name, url, mimeType: file.type, size: file.size },
+  });
+  revalidatePath('/admin/media');
+  return { ok: true };
+}
+
+export async function deleteMedia(id: string) {
+  await requireAdmin();
+  const m = await prisma.media.findUnique({ where: { id } });
+  if (m) {
+    await getStorage().delete(keyFromUrl(m.url));
+    await prisma.media.delete({ where: { id } });
+  }
+  revalidatePath('/admin/media');
 }
