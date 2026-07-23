@@ -111,6 +111,34 @@ export async function getEducation() {
   return content.education;
 }
 
+export type ThemeView = {
+  brandH: number;
+  brandS: number;
+  brandL: number;
+  hueCycle: boolean;
+  radius: number;
+};
+
+const DEFAULT_THEME: ThemeView = { brandH: 38, brandS: 96, brandL: 56, hueCycle: true, radius: 0.5 };
+
+export async function getTheme(): Promise<ThemeView> {
+  try {
+    const t = await prisma.themeSetting.findFirst();
+    if (t) {
+      return {
+        brandH: t.brandH,
+        brandS: t.brandS,
+        brandL: t.brandL,
+        hueCycle: t.hueCycle,
+        radius: t.radius,
+      };
+    }
+  } catch {
+    /* fall through */
+  }
+  return DEFAULT_THEME;
+}
+
 export async function getWriting() {
   try {
     const rows = await prisma.writingPost.findMany({ orderBy: { order: 'asc' } });

@@ -2,6 +2,22 @@
 
 Newest entries at the top. One short entry per phase. Read this first in any new session.
 
+## Phase 7 — Theme customizer (done)
+
+Admin-controlled accent + motion, applied site-wide with no redeploy.
+
+- `ThemeSetting` row read in the root layout, injected as `:root` CSS vars +
+  conditional `hue-cycle` class. `getTheme()` with default fallback; `saveTheme`
+  server action (`revalidatePath('/', 'layout')`).
+- `/admin/theme` → `ThemeCustomizer` (client): 8 accent presets, hue/sat/lightness/
+  radius sliders, hue-cycle toggle, **live preview** across the whole admin, a
+  saved→preview compare, **Save / Reset / Export / Import (JSON)**.
+- **Refactored the drift to be relative to the chosen accent** (`--brand-h =
+  --brand-h-base + animated offset`), so presets anchor the hue even with cycle on;
+  the default amber→violet drift is unchanged.
+- **Verified:** set Purple + cycle-off → live homepage computed `--brand-h: 270`
+  (fixed); Reset → back to amber (~38) with drift on. Restored default; build green.
+
 ## Phase 6b — Admin CMS core (done)
 
 CRUD for all visible content, built on **Next.js server actions** (each guarded by

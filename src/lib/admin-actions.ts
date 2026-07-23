@@ -210,6 +210,32 @@ export async function moveProject(id: string, dir: 'up' | 'down') {
   refresh('/admin/projects');
 }
 
+// ── Theme ─────────────────────────────────────────────────────────
+const clamp = (n: number, lo: number, hi: number, d: number) =>
+  Number.isFinite(n) ? Math.min(hi, Math.max(lo, n)) : d;
+
+export async function saveTheme(input: {
+  brandH: number;
+  brandS: number;
+  brandL: number;
+  hueCycle: boolean;
+  radius: number;
+}) {
+  await requireAdmin();
+  const data = {
+    brandH: clamp(input.brandH, 0, 360, 38),
+    brandS: Math.round(clamp(input.brandS, 0, 100, 96)),
+    brandL: Math.round(clamp(input.brandL, 20, 80, 56)),
+    hueCycle: Boolean(input.hueCycle),
+    radius: clamp(input.radius, 0, 1.5, 0.5),
+  };
+  const existing = await prisma.themeSetting.findFirst();
+  if (existing) await prisma.themeSetting.update({ where: { id: existing.id }, data });
+  else await prisma.themeSetting.create({ data });
+  // Theme lives in the root layout — revalidate the whole tree.
+  revalidatePath('/', 'layout');
+}
+
 // ── Hero / Profile (single row) ───────────────────────────────────
 export async function updateProfile(fd: FormData) {
   await requireAdmin();
