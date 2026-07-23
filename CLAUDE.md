@@ -74,6 +74,19 @@ without a redeploy.
   in a local `.env` the hash must be escaped as `\$`. `npm run hash-password` prints both
   the raw hash (for Vercel's env UI) and the escaped `.env` line.
 
+## Data layer (Phase 5)
+
+- **Postgres (Neon) + Prisma 7 with the pg driver adapter** (`@prisma/adapter-pg` + `pg`) —
+  engine-free WASM client (works where native engines can't install).
+- Prisma 7 differences from v6 to remember: the datasource URL is **not** in
+  `schema.prisma`; it's in `prisma.config.ts`. The runtime client passes an `adapter`
+  (`src/lib/prisma.ts`). Migrations use `DIRECT_URL ?? DATABASE_URL` (non-pooled).
+- Env: `DATABASE_URL` (pooled, runtime), `DIRECT_URL` (direct, migrations). Both gitignored.
+- Content source of truth is still `src/content/portfolio.ts`; `prisma/seed.ts` loads it
+  into the DB. Import `@next/env` **named** (`{ loadEnvConfig }`) in tsx scripts; wrap script
+  bodies in an async fn (tsx → CJS, no top-level await).
+- Commands: `npm run db:migrate` (migrate dev), `db:seed`, `db:generate`, `db:studio`.
+
 ## Commands
 
 - `npm run dev` — Next dev server (http://localhost:3000)
