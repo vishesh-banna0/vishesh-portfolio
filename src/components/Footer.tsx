@@ -12,7 +12,7 @@ const Footer = () => {
           <span className="grid h-6 w-6 place-items-center rounded bg-brand font-display text-xs font-bold text-brand-foreground">
             V
           </span>
-          <span className="text-sm text-muted-foreground">© 2026 Vishesh Shekhawat</span>
+          <span className="text-sm text-muted-foreground">©2026 Vishesh Shekhawat</span>
         </div>
 
         <nav className="flex flex-wrap justify-center gap-x-5 gap-y-2">

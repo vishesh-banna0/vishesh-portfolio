@@ -17,8 +17,10 @@ const Timeline = ({ education }: { education: EducationEntry[] }) => {
         <ol className="relative ml-2 space-y-10 border-l border-border">
           {education.map((edu, i) => (
             <li key={edu.shortName} className="relative pl-8 md:pl-10">
+              {/* Node marker lives outside Reveal: its will-change:transform would
+                  otherwise become the positioning context and shove the dot onto the text. */}
+              <span className="absolute -left-[9px] top-1.5 h-4 w-4 rounded-full border-2 border-brand bg-background" />
               <Reveal delay={i * 90}>
-                <span className="absolute -left-[9px] top-1.5 h-4 w-4 rounded-full border-2 border-brand bg-background" />
                 <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
                   <span className="mono-label !text-brand">{edu.period}</span>
                   <span className="mono-label">{edu.location}</span>

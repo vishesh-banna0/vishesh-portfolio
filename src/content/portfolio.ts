@@ -40,12 +40,12 @@ export const roles: string[] = [
 
 /** Headline stats — CRUD-editable (values like ranks / DSA count change over time). */
 export const stats: { value: string; label: string }[] = [
-  { value: "143", label: "Global rank · TensorTonic" },
-  { value: "1474", label: "Global rank · deep-ml" },
+  { value: "73", label: "Global rank · TensorTonic" },
+  { value: "203", label: "Global rank · deep-ml" },
   { value: "350+", label: "DSA problems solved" },
   { value: "top 32%", label: "LeetCode" },
   { value: "6+", label: "Systems shipped" },
-  { value: "7+", label: "Kaggle competitions" },
+  { value: "10+", label: "Kaggle competitions" },
 ];
 
 export const about = {
@@ -241,6 +241,6 @@ export const nav = [
   { label: "About", href: "#about" },
   { label: "Work", href: "#work" },
   { label: "Timeline", href: "#timeline" },
-  { label: "Writing", href: "#writing" },
+  { label: "Blog", href: "#Blog" },
   { label: "Contact", href: "#contact" },
 ] as const;
