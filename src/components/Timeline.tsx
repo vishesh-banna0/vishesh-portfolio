@@ -2,9 +2,9 @@
 
 import { Reveal } from './Reveal';
 import { SectionHeader } from './Section';
-import { education } from '@/content/portfolio';
+import type { EducationEntry } from '@/content/portfolio';
 
-const Timeline = () => {
+const Timeline = ({ education }: { education: EducationEntry[] }) => {
   return (
     <section id="timeline" className="relative py-20 md:py-28">
       <div className="container">

@@ -2,6 +2,16 @@
 
 Newest entries at the top. One short entry per phase. Read this first in any new session.
 
+## Phase 6a — Public site reads from DB (done)
+
+Added `src/lib/queries.ts` (server-only) with one query per content type, each returning
+the same shape the content module exports and **falling back to that module** if the DB is
+empty/unreachable (site never breaks). `app/page.tsx` is now an async Server Component
+(`force-dynamic`) that fetches everything and passes it to the sections as props; the seven
+section components were refactored from importing content to receiving props (render logic
+unchanged). Verified: homepage 200, renders identically from Neon at all breakpoints.
+Next (6b): admin CRUD to edit this content.
+
 ## Phase 5 — Data layer (done)
 
 Postgres (Neon) + **Prisma 7** with the **pg driver adapter** (engine-free — the WASM
