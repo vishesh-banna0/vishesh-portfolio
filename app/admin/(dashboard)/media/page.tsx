@@ -4,7 +4,7 @@ import { prisma } from '@/lib/prisma';
 import { PageTitle, ActionButton } from '@/components/admin/controls';
 import { Uploader } from '@/components/admin/Uploader';
 import { CopyButton } from '@/components/admin/CopyButton';
-import { deleteMedia } from '@/lib/admin-actions';
+import { deleteMedia, uploadMedia, uploadResume } from '@/lib/admin-actions';
 
 export const dynamic = 'force-dynamic';
 
@@ -16,11 +16,24 @@ export default async function MediaPage() {
     <div className="max-w-4xl">
       <PageTitle eyebrow="Assets" title="Media" />
       <p className="mb-6 max-w-2xl text-sm text-muted-foreground">
-        Upload images, the résumé PDF, or certificates. Copy a URL to paste it into any field —
-        for example, the résumé link on the Hero page.
+        Upload images for projects and certificates, or a new résumé PDF. Copy an image URL to
+        paste it into any field. Uploading a résumé updates the portfolio’s résumé link automatically.
       </p>
 
-      <Uploader />
+      <div className="grid gap-4 sm:grid-cols-2">
+        <Uploader
+          action={uploadMedia}
+          accept="image/png,image/jpeg,image/webp,image/gif,image/svg+xml"
+          label="Upload image"
+          hint="PNG, JPEG, WebP, GIF or SVG · up to 8 MB"
+        />
+        <Uploader
+          action={uploadResume}
+          accept="application/pdf"
+          label="Upload résumé (PDF)"
+          hint="PDF up to 8 MB · sets the live résumé link"
+        />
+      </div>
 
       <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {media.map((m) => (

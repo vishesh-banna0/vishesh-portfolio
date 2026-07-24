@@ -7,14 +7,7 @@ import { getStorage, keyFromUrl } from '@/lib/storage';
 import type { ProjectStatus } from '@prisma/client';
 
 const MAX_UPLOAD = 8 * 1024 * 1024; // 8 MB
-const ALLOWED_TYPES = [
-  'image/png',
-  'image/jpeg',
-  'image/webp',
-  'image/gif',
-  'image/svg+xml',
-  'application/pdf',
-];
+const IMAGE_TYPES = ['image/png', 'image/jpeg', 'image/webp', 'image/gif', 'image/svg+xml'];
 
 // Refresh the public site and the admin page after any change.
 function refresh(adminPath: string) {
@@ -288,19 +281,45 @@ export async function updateAbout(fd: FormData) {
 }
 
 // ── Media ─────────────────────────────────────────────────────────
-export async function uploadMedia(fd: FormData) {
-  await requireAdmin();
-  const file = fd.get('file');
-  if (!(file instanceof File) || file.size === 0) return { error: 'No file selected.' };
-  if (file.size > MAX_UPLOAD) return { error: 'File too large (max 8 MB).' };
-  if (!ALLOWED_TYPES.includes(file.type)) return { error: 'Unsupported file type.' };
-
+/** Validate + persist a file to storage and the media library. Shared by both uploaders. */
+async function saveUpload(file: File) {
   const buffer = Buffer.from(await file.arrayBuffer());
   const { url } = await getStorage().save({ buffer, filename: file.name, mimeType: file.type });
   await prisma.media.create({
     data: { filename: file.name, url, mimeType: file.type, size: file.size },
   });
+  return url;
+}
+
+// Image uploader — pictures for projects, avatars, etc.
+export async function uploadMedia(fd: FormData) {
+  await requireAdmin();
+  const file = fd.get('file');
+  if (!(file instanceof File) || file.size === 0) return { error: 'No file selected.' };
+  if (file.size > MAX_UPLOAD) return { error: 'File too large (max 8 MB).' };
+  if (!IMAGE_TYPES.includes(file.type)) return { error: 'Please choose an image (PNG, JPEG, WebP, GIF, SVG).' };
+
+  await saveUpload(file);
   revalidatePath('/admin/media');
+  return { ok: true };
+}
+
+// Résumé uploader — takes a PDF and repoints the portfolio's résumé link at it.
+export async function uploadResume(fd: FormData) {
+  await requireAdmin();
+  const file = fd.get('file');
+  if (!(file instanceof File) || file.size === 0) return { error: 'No file selected.' };
+  if (file.size > MAX_UPLOAD) return { error: 'File too large (max 8 MB).' };
+  if (file.type !== 'application/pdf') return { error: 'Résumé must be a PDF.' };
+
+  const url = await saveUpload(file);
+
+  // Point the live résumé link (Hero button) at the newly uploaded file.
+  const existing = await prisma.profile.findFirst();
+  if (existing) await prisma.profile.update({ where: { id: existing.id }, data: { resumeUrl: url } });
+
+  refresh('/admin/media'); // refresh() also revalidates the public site
+  revalidatePath('/admin/hero');
   return { ok: true };
 }
 

@@ -3,9 +3,21 @@
 import { useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Upload } from 'lucide-react';
-import { uploadMedia } from '@/lib/admin-actions';
 
-export function Uploader() {
+type UploadResult = { error?: string; ok?: boolean } | void;
+type UploadAction = (fd: FormData) => Promise<UploadResult>;
+
+export function Uploader({
+  action,
+  accept,
+  label = 'Upload file',
+  hint,
+}: {
+  action: UploadAction;
+  accept: string;
+  label?: string;
+  hint?: string;
+}) {
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
   const [busy, setBusy] = useState(false);
@@ -16,33 +28,40 @@ export function Uploader() {
     if (!file) return;
     setBusy(true);
     setMsg('');
-    const fd = new FormData();
-    fd.set('file', file);
-    const res = await uploadMedia(fd);
-    setBusy(false);
-    if (res && 'error' in res && res.error) {
-      setMsg(res.error);
-    } else {
-      setMsg(`Uploaded ${file.name}`);
-      router.refresh();
+    try {
+      const fd = new FormData();
+      fd.set('file', file);
+      const res = await action(fd);
+      if (res && 'error' in res && res.error) {
+        setMsg(res.error);
+      } else {
+        setMsg(`Uploaded ${file.name}`);
+        router.refresh();
+      }
+    } catch (err) {
+      // Without this, a rejected server action (e.g. a storage failure) would
+      // leave the button stuck on "Uploading…" forever.
+      setMsg(err instanceof Error ? err.message : 'Upload failed. Please try again.');
+    } finally {
+      setBusy(false);
+      if (inputRef.current) inputRef.current.value = '';
     }
-    if (inputRef.current) inputRef.current.value = '';
   }
 
   return (
     <div className="panel flex flex-wrap items-center gap-3 p-5">
       <label className="btn-primary inline-flex cursor-pointer !px-4 !py-2 text-sm">
-        <Upload size={16} /> {busy ? 'Uploading…' : 'Upload file'}
+        <Upload size={16} /> {busy ? 'Uploading…' : label}
         <input
           ref={inputRef}
           type="file"
-          accept="image/png,image/jpeg,image/webp,image/gif,image/svg+xml,application/pdf"
+          accept={accept}
           onChange={onChange}
           disabled={busy}
           className="hidden"
         />
       </label>
-      <span className="text-xs text-muted-foreground">Images or PDF, up to 8 MB</span>
+      {hint ? <span className="text-xs text-muted-foreground">{hint}</span> : null}
       {msg ? <span className="mono-label ml-auto !text-brand">{msg}</span> : null}
     </div>
   );
