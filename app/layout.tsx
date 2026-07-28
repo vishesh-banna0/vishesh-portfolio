@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Space_Grotesk, IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
+import { FaviconSync } from "@/components/FaviconSync";
 import { getTheme } from "@/lib/queries";
 
 // Display voice — geometric, technical, distinct from the Inter/Geist default.
@@ -58,6 +59,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     >
       <body>
         <style dangerouslySetInnerHTML={{ __html: themeVars }} />
+        <FaviconSync />
         <Providers>{children}</Providers>
       </body>
     </html>

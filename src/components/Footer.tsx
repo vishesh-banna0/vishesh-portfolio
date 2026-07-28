@@ -1,6 +1,7 @@
 'use client';
 
 import { nav } from '@/content/portfolio';
+import { Logo } from '@/components/Logo';
 
 const Footer = () => {
   const go = (href: string) => document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
@@ -9,9 +10,7 @@ const Footer = () => {
     <footer className="border-t border-border py-10">
       <div className="container flex flex-col items-center justify-between gap-6 md:flex-row">
         <div className="flex items-center gap-2.5">
-          <span className="grid h-6 w-6 place-items-center rounded bg-brand font-display text-xs font-bold text-brand-foreground">
-            V
-          </span>
+          <Logo className="h-7 w-7" />
           <span className="text-sm text-muted-foreground">©2026 Vishesh Shekhawat</span>
         </div>
 

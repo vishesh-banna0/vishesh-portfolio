@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import { nav } from '@/content/portfolio';
 import type { ProfileView } from '@/content/portfolio';
+import { Logo } from '@/components/Logo';
 
 const Navbar = ({ profile }: { profile: ProfileView }) => {
   const [scrolled, setScrolled] = useState(false);
@@ -55,9 +56,7 @@ const Navbar = ({ profile }: { profile: ProfileView }) => {
           }}
           className="flex items-center gap-2.5"
         >
-          <span className="grid h-7 w-7 place-items-center rounded-[5px] bg-brand font-display text-sm font-bold text-brand-foreground">
-            V
-          </span>
+          <Logo className="h-8 w-8" />
           <span className="font-display text-sm font-semibold tracking-tight">Vishesh Shekhawat</span>
         </a>
 
