@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
+import { ScrollProgress } from "@/components/ScrollProgress";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
 import Projects from "@/components/Projects";
@@ -59,6 +60,7 @@ export default async function Home() {
       <a href="#main" className="skip-link">
         Skip to content
       </a>
+      <ScrollProgress />
       <Navbar profile={profile} />
       <main id="main">
         <Hero profile={profile} roles={roles} stats={stats} />

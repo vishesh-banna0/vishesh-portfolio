@@ -2,11 +2,23 @@
 
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 
+type RevealFrom = 'up' | 'down' | 'left' | 'right' | 'scale';
+
+const HIDDEN_TRANSFORM: Record<RevealFrom, string> = {
+  up: 'translateY(16px)',
+  down: 'translateY(-16px)',
+  left: 'translateX(-24px)',
+  right: 'translateX(24px)',
+  scale: 'scale(0.96)',
+};
+
 interface RevealProps {
   children: ReactNode;
   className?: string;
   /** Stagger, in ms. */
   delay?: number;
+  /** Direction the element eases in from. Defaults to a gentle upward rise. */
+  from?: RevealFrom;
 }
 
 /**
@@ -15,7 +27,7 @@ interface RevealProps {
  * becomes visible even if the observer never fires — content is never trapped
  * at opacity:0. Animates only transform/opacity.
  */
-export function Reveal({ children, className = '', delay = 0 }: RevealProps) {
+export function Reveal({ children, className = '', delay = 0, from = 'up' }: RevealProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [shown, setShown] = useState(false);
 
@@ -57,7 +69,7 @@ export function Reveal({ children, className = '', delay = 0 }: RevealProps) {
       className={className}
       style={{
         opacity: shown ? 1 : 0,
-        transform: shown ? 'none' : 'translateY(16px)',
+        transform: shown ? 'none' : HIDDEN_TRANSFORM[from],
         transition: 'opacity 0.6s ease, transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1)',
         transitionDelay: `${delay}ms`,
         willChange: 'opacity, transform',

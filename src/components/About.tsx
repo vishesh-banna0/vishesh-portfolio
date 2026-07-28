@@ -16,14 +16,14 @@ const About = ({ about }: { about: AboutView }) => {
 
         <div className="grid gap-10 lg:grid-cols-[1.4fr_1fr] lg:gap-16">
           {/* Narrative */}
-          <Reveal className="space-y-5 leading-relaxed text-muted-foreground md:text-[1.05rem]">
+          <Reveal from="left" className="space-y-5 leading-relaxed text-muted-foreground md:text-[1.05rem]">
             {about.paragraphs.map((p, i) => (
               <p key={i}>{p}</p>
             ))}
           </Reveal>
 
           {/* Datasheet */}
-          <Reveal delay={120}>
+          <Reveal from="right" delay={120}>
             <div className="panel p-6">
               <div className="mono-label">Datasheet</div>
               <dl className="mt-4 divide-y divide-border">

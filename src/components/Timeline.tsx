@@ -1,10 +1,48 @@
 'use client';
 
+import { useEffect, useRef, useState } from 'react';
 import { Reveal } from './Reveal';
 import { SectionHeader } from './Section';
 import type { EducationEntry } from '@/content/portfolio';
 
 const Timeline = ({ education }: { education: EducationEntry[] }) => {
+  const olRef = useRef<HTMLOListElement>(null);
+  // 0 → 1: how far the viewport's midline has travelled down the timeline. Drives
+  // the height of the brand "fill" line so it draws itself as you scroll.
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    const el = olRef.current;
+    if (!el) return;
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setProgress(1); // no scroll-linked motion — show the full line
+      return;
+    }
+
+    let ticking = false;
+    const update = () => {
+      const rect = el.getBoundingClientRect();
+      const ref = window.innerHeight * 0.5; // viewport midline
+      const p = (ref - rect.top) / rect.height;
+      setProgress(Math.min(1, Math.max(0, p)));
+      ticking = false;
+    };
+    const onScroll = () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(update);
+      }
+    };
+    update();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+    };
+  }, []);
+
   return (
     <section id="timeline" className="relative py-20 md:py-28">
       <div className="container">
@@ -14,7 +52,15 @@ const Timeline = ({ education }: { education: EducationEntry[] }) => {
           intro="The academic track behind the systems work."
         />
 
-        <ol className="relative ml-2 space-y-10 border-l border-border">
+        <ol ref={olRef} className="relative ml-2 space-y-10">
+          {/* Static track + brand fill that grows with scroll. */}
+          <span aria-hidden className="absolute left-0 top-0 h-full w-px bg-border" />
+          <span
+            aria-hidden
+            className="absolute left-0 top-0 w-px bg-brand"
+            style={{ height: `${progress * 100}%`, boxShadow: '0 0 8px hsl(var(--brand) / 0.6)' }}
+          />
+
           {education.map((edu, i) => (
             <li key={edu.shortName} className="relative pl-8 md:pl-10">
               {/* Node marker lives outside Reveal: its will-change:transform would
