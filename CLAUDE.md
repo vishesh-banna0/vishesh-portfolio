@@ -86,6 +86,15 @@ without a redeploy.
   into the DB. Import `@next/env` **named** (`{ loadEnvConfig }`) in tsx scripts; wrap script
   bodies in an async fn (tsx → CJS, no top-level await).
 - Commands: `npm run db:migrate` (migrate dev), `db:seed`, `db:generate`, `db:studio`.
+- **A schema change is not done until its migration is committed AND applied.** `npm run build`
+  is `prisma migrate deploy && next build` so deploys apply migrations; before that was true,
+  a schema-only change shipped a Prisma client selecting a column Postgres didn't have, and
+  every admin write to that model 500'd. `src/lib/queries.ts` swallows the error and falls back
+  to `src/content/portfolio.ts`, so the *public* site looks fine while the admin is broken —
+  check `npx prisma migrate status` before assuming the DB matches.
+- `vercel env pull` writes `[SENSITIVE]` placeholders for secret env vars into `.env.local`,
+  which **overrides** `.env` in Next's loader. Keep those lines commented out locally or
+  `DATABASE_URL` becomes the literal string `[SENSITIVE]`.
 
 ## Commands
 

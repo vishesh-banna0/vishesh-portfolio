@@ -5,6 +5,11 @@ from-scratch deploy — the main new work is the production database and env var
 already build-verified locally; Vercel auto-detects Next.js and runs `prisma generate` via
 the `postinstall` script.
 
+> **Migrations run on deploy.** `npm run build` is
+> `prisma migrate deploy && next build`, so a new migration reaches the production DB as part
+> of the build. Adding a column to `schema.prisma` **without** committing its migration will
+> now fail the build instead of 500-ing at runtime — that's deliberate.
+
 ## 1. Production database
 
 You already have a **Neon** project (used in dev). For production you can reuse it, or
