@@ -41,6 +41,9 @@ export default async function HeroPage() {
           <Field label="Résumé URL">
             <Input name="resumeUrl" defaultValue={p?.resumeUrl ?? ''} />
           </Field>
+          <Field label="Profile image URL">
+            <Input name="profileImageUrl" defaultValue={p?.profileImageUrl ?? '/profile.jpeg'} />
+          </Field>
           <Field label="GitHub URL">
             <Input name="githubUrl" defaultValue={p?.githubUrl ?? ''} />
           </Field>

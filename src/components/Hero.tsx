@@ -1,6 +1,4 @@
 'use client';
-
-import Image from 'next/image';
 import { Download, Mail, Github, Linkedin, ArrowDown } from 'lucide-react';
 import TypewriterText from './TypewriterText';
 import { DenoiseField } from './DenoiseField';
@@ -67,19 +65,16 @@ const Hero = ({ profile, roles, stats }: HeroProps) => {
           <div className="relative mx-auto w-full max-w-sm">
             <div className="panel overflow-hidden">
               <div className="flex items-center justify-between border-b border-border px-4 py-2.5">
-                <span className="mono-label">profile.jpeg</span>
+                <span className="mono-label">profile image</span>
                 <span className="mono-label flex items-center gap-1.5 !text-brand">
                   <span className="inline-block h-1.5 w-1.5 rounded-full bg-brand" /> live
                 </span>
               </div>
               <div className="relative aspect-square">
-                <Image
-                  src="/profile.jpeg"
+                <img
+                  src={profile.profileImageUrl}
                   alt="Vishesh Shekhawat"
-                  fill
-                  sizes="(max-width: 1024px) 80vw, 360px"
-                  className="object-cover"
-                  priority
+                  className="h-full w-full object-cover"
                 />
                 <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-brand/10" />
               </div>

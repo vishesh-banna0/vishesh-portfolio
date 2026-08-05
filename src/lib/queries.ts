@@ -22,6 +22,7 @@ export async function getProfile() {
         location: p.location,
         email: p.email,
         resumeUrl: p.resumeUrl,
+        profileImageUrl: p.profileImageUrl,
         currently: p.currently,
         thesis: p.thesis,
         socials: { github: p.githubUrl, linkedin: p.linkedinUrl },

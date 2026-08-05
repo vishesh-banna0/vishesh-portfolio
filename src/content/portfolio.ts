@@ -17,6 +17,7 @@ export const profile = {
   location: "Jalandhar, Punjab, India",
   email: "visheshbanna0@outlook.com",
   resumeUrl: "/vishesh_2026.pdf",
+  profileImageUrl: "/profile.jpeg",
   currently: "M.Tech AI @ NIT Jalandhar",
   // The hero thesis — one line, what he actually does.
   thesis:
@@ -222,6 +223,7 @@ export type ProfileView = {
   location: string;
   email: string;
   resumeUrl: string;
+  profileImageUrl: string;
   currently: string;
   thesis: string;
   socials: { github: string; linkedin: string };

@@ -4,7 +4,7 @@ import { prisma } from '@/lib/prisma';
 import { PageTitle, ActionButton } from '@/components/admin/controls';
 import { Uploader } from '@/components/admin/Uploader';
 import { CopyButton } from '@/components/admin/CopyButton';
-import { deleteMedia, uploadMedia, uploadResume } from '@/lib/admin-actions';
+import { deleteMedia, uploadMedia, uploadProfileImage, uploadResume } from '@/lib/admin-actions';
 
 export const dynamic = 'force-dynamic';
 
@@ -20,12 +20,18 @@ export default async function MediaPage() {
         paste it into any field. Uploading a résumé updates the portfolio’s résumé link automatically.
       </p>
 
-      <div className="grid gap-4 sm:grid-cols-2">
+      <div className="grid gap-4 sm:grid-cols-3">
         <Uploader
           action={uploadMedia}
           accept="image/png,image/jpeg,image/webp,image/gif,image/svg+xml"
           label="Upload image"
           hint="PNG, JPEG, WebP, GIF or SVG · up to 8 MB"
+        />
+        <Uploader
+          action={uploadProfileImage}
+          accept="image/png,image/jpeg,image/webp,image/gif,image/svg+xml"
+          label="Replace profile photo"
+          hint="Sets the live Hero portrait"
         />
         <Uploader
           action={uploadResume}
@@ -40,7 +46,6 @@ export default async function MediaPage() {
           <div key={m.id} className="panel overflow-hidden">
             <div className="grid aspect-video place-items-center bg-surface-2">
               {m.mimeType.startsWith('image/') ? (
-                // eslint-disable-next-line @next/next/no-img-element
                 <img src={m.url} alt={m.alt ?? m.filename} className="h-full w-full object-cover" />
               ) : (
                 <span className="mono-label">{m.mimeType.split('/')[1]?.toUpperCase() ?? 'FILE'}</span>

@@ -44,6 +44,7 @@ async function main() {
       location: profile.location,
       email: profile.email,
       resumeUrl: profile.resumeUrl,
+      profileImageUrl: profile.profileImageUrl,
       currently: profile.currently,
       thesis: profile.thesis,
       githubUrl: profile.socials.github,

@@ -249,6 +249,7 @@ export async function updateProfile(fd: FormData) {
     location: str(fd, 'location'),
     email: str(fd, 'email'),
     resumeUrl: str(fd, 'resumeUrl'),
+    profileImageUrl: str(fd, 'profileImageUrl') || '/profile.jpeg',
     currently: str(fd, 'currently'),
     thesis: str(fd, 'thesis'),
     githubUrl: str(fd, 'githubUrl'),
@@ -319,6 +320,24 @@ export async function uploadResume(fd: FormData) {
   if (existing) await prisma.profile.update({ where: { id: existing.id }, data: { resumeUrl: url } });
 
   refresh('/admin/media'); // refresh() also revalidates the public site
+  revalidatePath('/admin/hero');
+  return { ok: true };
+}
+
+// Profile photo uploader - takes an image and repoints the Hero portrait at it.
+export async function uploadProfileImage(fd: FormData) {
+  await requireAdmin();
+  const file = fd.get('file');
+  if (!(file instanceof File) || file.size === 0) return { error: 'No file selected.' };
+  if (file.size > MAX_UPLOAD) return { error: 'File too large (max 8 MB).' };
+  if (!IMAGE_TYPES.includes(file.type)) return { error: 'Please choose an image (PNG, JPEG, WebP, GIF, SVG).' };
+
+  const url = await saveUpload(file);
+
+  const existing = await prisma.profile.findFirst();
+  if (existing) await prisma.profile.update({ where: { id: existing.id }, data: { profileImageUrl: url } });
+
+  refresh('/admin/media');
   revalidatePath('/admin/hero');
   return { ok: true };
 }
