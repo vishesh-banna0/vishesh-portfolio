@@ -22,7 +22,7 @@ export async function getProfile() {
         location: p.location,
         email: p.email,
         resumeUrl: p.resumeUrl,
-        profileImageUrl: p.profileImageUrl,
+        profileImageUrl: content.replacedProfileImages.includes(p.profileImageUrl) ? content.profile.profileImageUrl : p.profileImageUrl,
         currently: p.currently,
         thesis: p.thesis,
         socials: { github: p.githubUrl, linkedin: p.linkedinUrl },
@@ -73,7 +73,7 @@ export async function getProjects() {
   try {
     const rows = await prisma.project.findMany({ orderBy: { order: 'asc' } });
     if (rows.length) {
-      return rows.map((r) => ({
+      const projects = rows.map((r) => ({
         slug: r.slug,
         title: r.title,
         summary: r.summary,
@@ -85,6 +85,7 @@ export async function getProjects() {
         status: r.status.toLowerCase() as 'shipped' | 'research' | 'building',
         year: r.year ?? undefined,
       }));
+      return projects;
     }
   } catch {
     /* fall through */
@@ -120,12 +121,15 @@ export type ThemeView = {
   radius: number;
 };
 
-const DEFAULT_THEME: ThemeView = { brandH: 38, brandS: 96, brandL: 56, hueCycle: true, radius: 0.5 };
+const DEFAULT_THEME: ThemeView = { brandH: 287, brandS: 61, brandL: 67, hueCycle: false, radius: 0 };
 
 export async function getTheme(): Promise<ThemeView> {
   try {
     const t = await prisma.themeSetting.findFirst();
     if (t) {
+      if (t.brandH === 38 && t.brandS === 96 && t.brandL === 56 && t.hueCycle && t.radius === 0.5) {
+        return DEFAULT_THEME;
+      }
       return {
         brandH: t.brandH,
         brandS: t.brandS,

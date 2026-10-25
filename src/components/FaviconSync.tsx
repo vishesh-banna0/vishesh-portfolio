@@ -23,9 +23,9 @@ export function FaviconSync() {
 
     const draw = () => {
       const cs = getComputedStyle(root);
-      const h = cs.getPropertyValue('--brand-h').trim() || '38';
-      const s = cs.getPropertyValue('--brand-s').trim() || '96%';
-      const l = cs.getPropertyValue('--brand-l').trim() || '56%';
+      const h = cs.getPropertyValue('--brand-h').trim() || '287';
+      const s = cs.getPropertyValue('--brand-s').trim() || '61%';
+      const l = cs.getPropertyValue('--brand-l').trim() || '67%';
       const brand = `hsl(${h} ${s} ${l})`;
       const bright = `hsl(${h} ${s} 66%)`; // matches --brand-bright
 

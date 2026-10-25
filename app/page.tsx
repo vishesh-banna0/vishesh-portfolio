@@ -3,6 +3,7 @@ import Navbar from "@/components/Navbar";
 import { ScrollProgress } from "@/components/ScrollProgress";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
+import Skills from "@/components/Skills";
 import Projects from "@/components/Projects";
 import Timeline from "@/components/Timeline";
 import Writing from "@/components/Writing";
@@ -63,14 +64,15 @@ export default async function Home() {
       <ScrollProgress />
       <Navbar profile={profile} />
       <main id="main">
-        <Hero profile={profile} roles={roles} stats={stats} />
-        <About about={about} />
+        <Hero profile={profile} />
         <Projects projects={projects} />
+        <Skills about={about} stats={stats} roles={roles} />
+        <About about={about} profile={profile} />
         <Timeline education={education} />
         <Writing writing={writing} />
         <Contact profile={profile} />
       </main>
-      <Footer />
+      <Footer profile={profile} />
     </div>
   );
 }

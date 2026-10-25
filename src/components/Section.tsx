@@ -2,28 +2,29 @@ import { Reveal } from './Reveal';
 
 interface SectionHeaderProps {
   eyebrow: string;
-  title: string;
+  title?: string;
   intro?: string;
   align?: 'left' | 'center';
 }
 
-/** Consistent section header: mono eyebrow → display title → optional intro. */
+/** Figma section heading, with optional supporting copy. */
 export function SectionHeader({ eyebrow, title, intro, align = 'left' }: SectionHeaderProps) {
   return (
-    <header className={align === 'center' ? 'mb-12 text-center md:mb-16' : 'mb-12 md:mb-16'}>
+    <header className={align === 'center' ? 'mb-10 text-center' : 'mb-10 w-full'}>
       <Reveal>
-        <span className={align === 'center' ? 'eyebrow justify-center' : 'eyebrow'}>{eyebrow}</span>
+        <div className={align === 'center' ? 'flex items-center justify-center gap-4' : 'flex items-center gap-4'}>
+          <h2 className="section-title whitespace-nowrap"><span className="text-brand">#</span>{eyebrow.toLowerCase()}</h2>
+          {align === 'left' ? <span aria-hidden className="h-px max-w-[340px] flex-1 bg-brand/70" /> : null}
+        </div>
       </Reveal>
-      <Reveal delay={70}>
-        <h2 className="section-title mt-4">{title}</h2>
-      </Reveal>
+      {title ? <Reveal delay={70}><p className="mt-3 text-sm text-muted-foreground">{title}</p></Reveal> : null}
       {intro ? (
         <Reveal delay={130}>
           <p
             className={
               align === 'center'
-                ? 'mx-auto mt-4 max-w-2xl text-muted-foreground'
-                : 'mt-4 max-w-2xl text-muted-foreground'
+                ? 'mx-auto mt-2 max-w-2xl text-sm leading-7 text-muted-foreground'
+                : 'mt-2 max-w-2xl text-sm leading-7 text-muted-foreground'
             }
           >
             {intro}

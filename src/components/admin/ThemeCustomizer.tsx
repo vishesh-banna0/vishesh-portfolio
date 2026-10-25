@@ -5,14 +5,14 @@ import { Check, Download, Upload, RotateCcw } from 'lucide-react';
 import { saveTheme } from '@/lib/admin-actions';
 import type { ThemeView } from '@/lib/queries';
 
-const DEFAULTS: ThemeView = { brandH: 38, brandS: 96, brandL: 56, hueCycle: true, radius: 0.5 };
+const DEFAULTS: ThemeView = { brandH: 287, brandS: 61, brandL: 67, hueCycle: false, radius: 0 };
 
 const PRESETS = [
   { name: 'Gold', h: 38, s: 96, l: 56 },
   { name: 'Orange', h: 24, s: 95, l: 55 },
   { name: 'Red', h: 2, s: 85, l: 58 },
   { name: 'Pink', h: 330, s: 85, l: 62 },
-  { name: 'Purple', h: 270, s: 80, l: 62 },
+  { name: 'Figma purple', h: 287, s: 61, l: 67 },
   { name: 'Blue', h: 216, s: 95, l: 60 },
   { name: 'Cyan', h: 190, s: 90, l: 52 },
   { name: 'Emerald', h: 155, s: 72, l: 48 },
@@ -134,7 +134,7 @@ export function ThemeCustomizer({ initial }: { initial: ThemeView }) {
           <label className="flex items-center justify-between">
             <span className="text-sm">
               Hue cycle
-              <span className="mono-label ml-2 !text-[0.6rem]">amber → violet drift</span>
+              <span className="mono-label ml-2 !text-[0.6rem]">accent hue drift</span>
             </span>
             <button
               type="button"

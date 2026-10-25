@@ -67,8 +67,8 @@ export default {
         sm: "calc(var(--radius) - 4px)",
       },
       fontFamily: {
-        display: ["var(--font-display)", "Space Grotesk", "sans-serif"],
-        sans: ["var(--font-sans)", "system-ui", "-apple-system", "sans-serif"],
+        display: ["var(--font-mono)", "ui-monospace", "monospace"],
+        sans: ["var(--font-mono)", "ui-monospace", "monospace"],
         mono: ["var(--font-mono)", "ui-monospace", "monospace"],
       },
       backgroundImage: {

@@ -227,9 +227,9 @@ export async function saveTheme(input: {
 }) {
   await requireAdmin();
   const data = {
-    brandH: clamp(input.brandH, 0, 360, 38),
-    brandS: Math.round(clamp(input.brandS, 0, 100, 96)),
-    brandL: Math.round(clamp(input.brandL, 20, 80, 56)),
+    brandH: clamp(input.brandH, 0, 360, 287),
+    brandS: Math.round(clamp(input.brandS, 0, 100, 61)),
+    brandL: Math.round(clamp(input.brandL, 20, 80, 67)),
     hueCycle: Boolean(input.hueCycle),
     radius: clamp(input.radius, 0, 1.5, 0.5),
   };
@@ -249,7 +249,7 @@ export async function updateProfile(fd: FormData) {
     location: str(fd, 'location'),
     email: str(fd, 'email'),
     resumeUrl: str(fd, 'resumeUrl'),
-    profileImageUrl: str(fd, 'profileImageUrl') || '/profile.jpeg',
+    profileImageUrl: str(fd, 'profileImageUrl') || '/profile-portrait.png',
     currently: str(fd, 'currently'),
     thesis: str(fd, 'thesis'),
     githubUrl: str(fd, 'githubUrl'),

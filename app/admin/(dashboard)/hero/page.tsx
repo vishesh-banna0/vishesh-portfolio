@@ -2,6 +2,7 @@ import { requireAdmin } from '@/lib/admin-auth';
 import { prisma } from '@/lib/prisma';
 import { PageTitle, Input, Textarea, Field, SaveButton } from '@/components/admin/controls';
 import { updateProfile } from '@/lib/admin-actions';
+import { profile, replacedProfileImages } from '@/content/portfolio';
 
 export const dynamic = 'force-dynamic';
 
@@ -42,7 +43,7 @@ export default async function HeroPage() {
             <Input name="resumeUrl" defaultValue={p?.resumeUrl ?? ''} />
           </Field>
           <Field label="Profile image URL">
-            <Input name="profileImageUrl" defaultValue={p?.profileImageUrl ?? '/profile.jpeg'} />
+            <Input name="profileImageUrl" defaultValue={!p || replacedProfileImages.includes(p.profileImageUrl) ? profile.profileImageUrl : p.profileImageUrl} />
           </Field>
           <Field label="GitHub URL">
             <Input name="githubUrl" defaultValue={p?.githubUrl ?? ''} />

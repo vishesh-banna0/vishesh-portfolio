@@ -14,12 +14,10 @@
 @property --brand-h {
   syntax: "<number>";
   inherits: true;
-  initial-value: 38;
+  initial-value: 287;
 }
 
-/* Ambient hue drift, RELATIVE to the chosen accent (--brand-h-base). At the default
-   amber base this is the amber -> violet drift; pick any accent and it anchors there.
-   Opt-in via a class on <html> so the theme customizer can freeze it. */
+/* Optional hue drift relative to the accent selected in the theme customizer. */
 @keyframes hue-drift {
   from { --brand-h: var(--brand-h-base); }
   to { --brand-h: calc(var(--brand-h-base) - 123); } /* ~123deg toward violet */
@@ -31,30 +29,28 @@
 @layer base {
   :root {
     /* ── Base surfaces: deep, cool graphite ── */
-    --background: 222 18% 5%;
-    --surface: 222 15% 8%;
-    --surface-2: 222 14% 11%;
-    --foreground: 210 22% 96%;
+    --background: 216 12% 18%;
+    --surface: 216 12% 18%;
+    --surface-2: 216 12% 21%;
+    --foreground: 0 0% 100%;
 
     /* ── Text hierarchy ── */
-    --muted-foreground: 218 12% 62%;
-    --faint: 220 10% 40%;
+    --muted-foreground: 217 15% 71%;
+    --faint: 217 10% 52%;
 
     /* ── Lines ── */
-    --border: 220 13% 15%;
-    --border-strong: 220 12% 24%;
+    --border: 217 15% 44%;
+    --border-strong: 217 15% 71%;
 
-    /* ── Brand accent — SINGLE SOURCE OF TRUTH ──
-       Amber "signal" against cold graphite. Change these three lines (or the
-       whole triplet via --brand) to recolor the entire UI. */
-    --brand-h-base: 38;
+    /* ── Brand accent — adjustable through the existing theme customizer. */
+    --brand-h-base: 287;
     --brand-h: var(--brand-h-base);
-    --brand-s: 96%;
-    --brand-l: 56%;
+    --brand-s: 61%;
+    --brand-l: 67%;
     --brand: var(--brand-h) var(--brand-s) var(--brand-l);
     --brand-bright: var(--brand-h) var(--brand-s) 66%;
     --brand-dim: var(--brand-h) calc(var(--brand-s) - 20%) 46%;
-    --brand-foreground: 36 45% 8%;
+    --brand-foreground: 216 12% 18%;
 
     /* Derived, brand-driven decoration */
     --gradient-brand: linear-gradient(135deg, hsl(var(--brand)), hsl(var(--brand-bright)));
@@ -70,16 +66,16 @@
     --popover-foreground: var(--foreground);
     --primary: var(--brand);
     --primary-foreground: var(--brand-foreground);
-    --secondary: 222 14% 13%;
+    --secondary: 216 12% 21%;
     --secondary-foreground: var(--foreground);
-    --muted: 222 12% 13%;
-    --accent: 222 12% 15%;
+    --muted: 216 12% 21%;
+    --accent: 216 12% 25%;
     --accent-foreground: var(--foreground);
     --destructive: 0 72% 55%;
     --destructive-foreground: 210 22% 96%;
-    --input: 220 13% 16%;
+    --input: 217 15% 44%;
     --ring: var(--brand);
-    --radius: 0.5rem;
+    --radius: 0rem;
   }
 }
 
@@ -99,8 +95,7 @@
 
   body {
     @apply bg-background text-foreground antialiased;
-    font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
-    font-feature-settings: "cv05" 1, "ss01" 1;
+    font-family: var(--font-mono), ui-monospace, monospace;
   }
 
   ::selection {
@@ -116,8 +111,8 @@
   }
 
   h1, h2, h3, h4 {
-    font-family: var(--font-display), var(--font-sans), sans-serif;
-    letter-spacing: -0.02em;
+    font-family: var(--font-mono), ui-monospace, monospace;
+    letter-spacing: -0.045em;
   }
 }
 
@@ -125,10 +120,10 @@
   /* ── Instrument-readout label: the mono "voice" for eyebrows, indices, data ── */
   .mono-label {
     font-family: var(--font-mono), monospace;
-    font-size: 0.72rem;
-    font-weight: 500;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0;
+    text-transform: none;
     color: hsl(var(--muted-foreground));
   }
 
@@ -137,13 +132,7 @@
     @apply mono-label inline-flex items-center gap-2;
     color: hsl(var(--brand));
   }
-  .eyebrow::before {
-    content: "";
-    width: 1.5rem;
-    height: 1px;
-    background: hsl(var(--brand));
-    display: inline-block;
-  }
+  .eyebrow::before { content: "#"; }
 
   /* Hairline rule */
   .hairline {
@@ -188,9 +177,9 @@
 
   /* Sticky navbar surface */
   .navbar-blur {
-    background: hsl(var(--background) / 0.72);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
+    background: hsl(var(--background) / 0.96);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     border-bottom: 1px solid hsl(var(--border));
   }
 
@@ -207,26 +196,26 @@
     font-family: var(--font-mono), monospace;
     font-size: 0.72rem;
     padding: 0.2rem 0.55rem;
-    border-radius: 4px;
+    border-radius: 0;
     border: 1px solid hsl(var(--border-strong));
     color: hsl(var(--muted-foreground));
-    background: hsl(var(--surface-2) / 0.5);
+    background: transparent;
     white-space: nowrap;
   }
 
   /* Buttons */
   .btn-primary {
-    @apply relative inline-flex items-center justify-center gap-2 rounded-md px-5 py-2.5 font-medium transition-all duration-200;
-    background: hsl(var(--brand));
-    color: hsl(var(--brand-foreground));
+    @apply relative inline-flex items-center justify-center gap-2 px-4 py-2 font-medium transition-colors duration-200;
+    background: transparent;
+    border: 1px solid hsl(var(--brand));
+    color: hsl(var(--foreground));
   }
   .btn-primary:hover {
-    background: hsl(var(--brand-bright));
-    box-shadow: 0 6px 30px -8px hsl(var(--brand) / 0.6);
+    background: hsl(var(--brand) / 0.12);
   }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center gap-2 rounded-md px-5 py-2.5 font-medium transition-all duration-200;
+    @apply inline-flex items-center justify-center gap-2 px-4 py-2 font-medium transition-colors duration-200;
     border: 1px solid hsl(var(--border-strong));
     color: hsl(var(--foreground));
     background: transparent;
@@ -238,8 +227,29 @@
 
   /* Section heading */
   .section-title {
-    @apply text-3xl md:text-4xl font-semibold tracking-tight;
+    @apply text-[28px] md:text-[32px] font-medium tracking-normal;
     color: hsl(var(--foreground));
+  }
+
+  .figma-dots {
+    background-image: radial-gradient(circle, hsl(var(--muted-foreground)) 1.5px, transparent 1.7px);
+    background-size: 18px 18px;
+  }
+
+  .project-cover {
+    background:
+      linear-gradient(138deg, hsl(var(--brand) / 0.3), transparent 58%),
+      linear-gradient(320deg, hsl(var(--surface-2)), hsl(var(--background)) 72%),
+      hsl(var(--background));
+  }
+  .project-cover[data-cover="prospera-ai"] {
+    background: linear-gradient(145deg, #132d32, #101c26 65%, #1e3c41);
+  }
+  .project-cover[data-cover="manos-ai"] {
+    background: linear-gradient(145deg, #3f2366, #231832 65%, #452975);
+  }
+  .project-cover[data-cover="newstack-ai"] {
+    background: linear-gradient(145deg, #603820, #29212a 65%, #6d4930);
   }
 
   /* Legacy alias kept until Phase 3 rewrites the last references */
@@ -304,7 +314,7 @@
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
   }
-  /* Freeze the accent on the base amber for reduced-motion users. */
+  /* Freeze the accent on the selected base for reduced-motion users. */
   .hue-cycle {
     animation: none !important;
   }

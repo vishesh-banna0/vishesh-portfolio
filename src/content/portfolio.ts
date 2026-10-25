@@ -17,7 +17,7 @@ export const profile = {
   location: "Jalandhar, Punjab, India",
   email: "visheshbanna0@outlook.com",
   resumeUrl: "/vishesh_2026.pdf",
-  profileImageUrl: "/profile.jpeg",
+  profileImageUrl: "/profile-portrait.png",
   currently: "M.Tech AI @ NIT Jalandhar",
   // The hero thesis — one line, what he actually does.
   thesis:
@@ -27,6 +27,11 @@ export const profile = {
     linkedin: "https://linkedin.com/in/vishesh-shekhawat",
   },
 } as const;
+
+export const replacedProfileImages = [
+  '/profile.jpeg',
+  'https://hc8apjjbv2idkruy.public.blob.vercel-storage.com/image_with_ai_generated_but_single_color_background-d25KJUNhWuv9xiOZgnCxb5z3GpCZNi.png',
+];
 
 /** Typewriter roles — CRUD-editable in the admin (add / edit / reorder / remove). */
 export const roles: string[] = [
@@ -240,9 +245,11 @@ export type AboutView = {
 
 /** Public navigation — section order reflects what matters most for a systems engineer. */
 export const nav = [
-  { label: "About", href: "#about" },
+  { label: "Home", href: "#home" },
   { label: "Work", href: "#work" },
+  { label: "Skills", href: "#skills" },
+  { label: "About", href: "#about" },
   { label: "Timeline", href: "#timeline" },
-  { label: "Blog", href: "#Blog" },
+  { label: "Blog", href: "#writing" },
   { label: "Contact", href: "#contact" },
 ] as const;

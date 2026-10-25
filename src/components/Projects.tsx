@@ -1,89 +1,58 @@
 'use client';
 
 import { useState } from 'react';
-import { Reveal } from './Reveal';
 import { SectionHeader } from './Section';
 import ProjectModal from './ProjectModal';
 import type { Project } from '@/content/portfolio';
 
-const Projects = ({ projects }: { projects: Project[] }) => {
+function ProjectCard({ project, onSelect }: { project: Project; onSelect: () => void }) {
+  return (
+    <button onClick={onSelect} className="group flex h-full w-full flex-col border border-border-strong text-left transition-colors hover:border-brand">
+      <div data-cover={project.slug} className="project-cover relative flex h-[201px] w-full items-center justify-center overflow-hidden border-b border-border-strong">
+        <div aria-hidden className="absolute -left-8 top-7 h-36 w-36 rotate-12 border border-brand/50" />
+        <div aria-hidden className="absolute -right-8 bottom-0 h-36 w-36 -rotate-12 border border-brand/40" />
+        <div aria-hidden className="figma-dots absolute right-6 top-5 h-16 w-16 opacity-70" />
+        <div className="relative z-10 border border-border-strong bg-background/90 px-5 py-4 text-center shadow-xl">
+          <span className="block text-[11px] text-brand">{project.status ?? 'project'} / {project.year}</span>
+          <span className="mt-2 block text-xl font-semibold text-foreground">{project.title}</span>
+        </div>
+      </div>
+      <div className="flex min-h-10 w-full flex-wrap items-center gap-x-2 border-b border-border-strong px-2 py-2 text-xs text-muted-foreground">
+        {project.stack.slice(0, 4).map((item) => <span key={item}>{item}</span>)}
+      </div>
+      <div className="flex flex-1 flex-col gap-4 p-4">
+        <h3 className="text-2xl font-medium text-foreground">{project.title}</h3>
+        <p className="flex-1 text-sm leading-6 text-muted-foreground">{project.summary}</p>
+        <span className="btn-primary self-start text-sm">Details &lt;~&gt;</span>
+      </div>
+    </button>
+  );
+}
+
+export default function Projects({ projects }: { projects: Project[] }) {
   const [selected, setSelected] = useState<Project | null>(null);
-  const featured = projects.find((p) => p.featured);
-  const rest = projects.filter((p) => !p.featured);
+  const [showAll, setShowAll] = useState(false);
+  const ordered = [...projects].sort((a, b) => Number(Boolean(b.featured)) - Number(Boolean(a.featured)));
+  const visible = showAll ? ordered : ordered.slice(0, 3);
 
   return (
     <section id="work" className="relative py-20 md:py-28">
-      <div className="container">
-        <SectionHeader
-          eyebrow="Selected work"
-          title="Systems, shipped."
-          intro="Production systems, agents, and from-scratch paper implementations. Select any for detail."
-        />
-
-        {featured ? (
-          <Reveal>
-            <button
-              onClick={() => setSelected(featured)}
-              className="panel group block w-full p-6 text-left transition-colors hover:border-brand/40 md:p-8"
-            >
-              <div className="flex items-center gap-3">
-                <span className="mono-label !text-brand">Featured</span>
-                <span className="h-px flex-1 bg-border" />
-                <span className="mono-label">{featured.year}</span>
-              </div>
-              <div className="mt-4 grid gap-6 md:grid-cols-[1.3fr_1fr] md:items-end">
-                <div>
-                  <h3 className="font-display text-2xl font-semibold tracking-tight transition-colors group-hover:text-brand md:text-3xl">
-                    {featured.title}
-                  </h3>
-                  <p className="mt-3 max-w-xl leading-relaxed text-muted-foreground">{featured.summary}</p>
-                </div>
-                <div className="flex flex-wrap gap-2 md:justify-end">
-                  {featured.stack.slice(0, 8).map((t) => (
-                    <span key={t} className="tag">
-                      {t}
-                    </span>
-                  ))}
-                </div>
-              </div>
+      <div className="container max-w-[1072px]">
+        <div className="flex items-start justify-between gap-5">
+          <SectionHeader eyebrow="projects" />
+          {ordered.length > 3 && (
+            <button onClick={() => setShowAll((value) => !value)} className="mt-2 shrink-0 text-sm text-foreground hover:text-brand">
+              {showAll ? 'Show less ←' : 'View all ~~>'}
             </button>
-          </Reveal>
-        ) : null}
-
-        <div className="mt-6 grid gap-6 md:grid-cols-2">
-          {rest.map((p, i) => (
-            <Reveal key={p.slug} delay={i * 70}>
-              <button
-                onClick={() => setSelected(p)}
-                className="panel group flex h-full w-full flex-col p-6 text-left transition-colors hover:border-brand/40"
-              >
-                <div className="flex items-center justify-between">
-                  <span className={`mono-label ${p.status === 'research' ? '' : '!text-brand'}`}>
-                    {p.status}
-                  </span>
-                  <span className="mono-label">{p.year}</span>
-                </div>
-                <h3 className="mt-3 font-display text-xl font-semibold tracking-tight transition-colors group-hover:text-brand">
-                  {p.title}
-                </h3>
-                <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">{p.summary}</p>
-                <div className="mt-4 flex flex-wrap gap-1.5">
-                  {p.stack.slice(0, 5).map((t) => (
-                    <span key={t} className="tag">
-                      {t}
-                    </span>
-                  ))}
-                  {p.stack.length > 5 ? <span className="tag">+{p.stack.length - 5}</span> : null}
-                </div>
-              </button>
-            </Reveal>
+          )}
+        </div>
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {visible.map((project) => (
+            <ProjectCard key={project.slug} project={project} onSelect={() => setSelected(project)} />
           ))}
         </div>
       </div>
-
-      <ProjectModal project={selected} isOpen={!!selected} onClose={() => setSelected(null)} />
+      <ProjectModal project={selected} isOpen={Boolean(selected)} onClose={() => setSelected(null)} />
     </section>
   );
-};
-
-export default Projects;
+}

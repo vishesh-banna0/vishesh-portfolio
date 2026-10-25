@@ -44,39 +44,39 @@ const Navbar = ({ profile }: { profile: ProfileView }) => {
   return (
     <nav
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
-        scrolled ? 'navbar-blur py-3' : 'py-5'
+        scrolled ? 'navbar-blur py-3' : 'bg-background pb-2 pt-8'
       }`}
     >
-      <div className="container flex items-center justify-between">
+      <div className="container flex max-w-[1072px] items-center justify-between gap-5">
         <a
           href="#home"
           onClick={(e) => {
             e.preventDefault();
             window.scrollTo({ top: 0, behavior: 'smooth' });
           }}
-          className="flex items-center gap-2.5"
+          className="flex items-center gap-2"
         >
-          <Logo className="h-8 w-8" />
-          <span className="font-display text-sm font-semibold tracking-tight">Vishesh Shekhawat</span>
+          <Logo className="h-4 w-4" />
+          <span className="text-base font-bold tracking-normal">{profile.name}</span>
         </a>
 
-        <div className="hidden items-center gap-1 md:flex">
+        <div className="hidden items-center gap-3 md:flex lg:gap-5">
           {nav.map((link) => {
             const isActive = active === link.href.slice(1);
             return (
               <button
                 key={link.href}
                 onClick={() => go(link.href)}
-                className={`mono-label rounded px-3 py-2 transition-colors ${
-                  isActive ? '!text-brand' : 'hover:!text-foreground'
+                className={`text-xs transition-colors lg:text-sm ${
+                  isActive ? 'text-white' : 'text-muted-foreground hover:text-white'
                 }`}
               >
-                {link.label}
+                <span className="text-brand">#</span>{link.label.toLowerCase()}
               </button>
             );
           })}
-          <a href="/admin/login" className="btn-secondary ml-2 !px-4 !py-2 text-sm">
-            Admin Login
+          <a href="/admin/login" className="ml-1 text-xs text-muted-foreground hover:text-white">
+            admin ↗
           </a>
         </div>
 
@@ -98,13 +98,13 @@ const Navbar = ({ profile }: { profile: ProfileView }) => {
             <button
               key={link.href}
               onClick={() => go(link.href)}
-              className="mono-label py-2 text-left hover:!text-foreground"
+              className="py-2 text-left text-sm text-muted-foreground hover:text-foreground"
             >
-              {link.label}
+              <span className="text-brand">#</span>{link.label.toLowerCase()}
             </button>
           ))}
-          <a href="/admin/login" className="btn-secondary mt-2 justify-center">
-            Admin Login
+          <a href="/admin/login" className="mt-2 text-sm text-muted-foreground">
+            admin
           </a>
         </div>
       </div>

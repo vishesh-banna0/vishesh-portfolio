@@ -1,30 +1,16 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import { Providers } from "./providers";
 import { FaviconSync } from "@/components/FaviconSync";
 import { getTheme } from "@/lib/queries";
 
-// Display voice — geometric, technical, distinct from the Inter/Geist default.
-const spaceGrotesk = Space_Grotesk({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-display",
-  display: "swap",
-});
-
-// Body — engineering-grade humanist sans (the working text).
-const plexSans = IBM_Plex_Sans({
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  variable: "--font-sans",
-  display: "swap",
-});
-
-// Mono — instrument readouts: labels, indices, data, tech tags.
-const plexMono = IBM_Plex_Mono({
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
+const firaCode = localFont({
+  src: [
+    { path: "../public/fonts/FiraCode-Regular.ttf", weight: "400" },
+    { path: "../public/fonts/FiraCode-Medium.ttf", weight: "500" },
+    { path: "../public/fonts/FiraCode-Bold.ttf", weight: "700" },
+  ],
   variable: "--font-mono",
   display: "swap",
 });
@@ -54,7 +40,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html
       lang="en"
-      className={`${spaceGrotesk.variable} ${plexSans.variable} ${plexMono.variable}${theme.hueCycle ? " hue-cycle" : ""}`}
+      className={`${firaCode.variable}${theme.hueCycle ? " hue-cycle" : ""}`}
       suppressHydrationWarning
     >
       <body>
