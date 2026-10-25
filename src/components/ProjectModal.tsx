@@ -43,7 +43,7 @@ const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
       >
         <div className="sticky top-0 z-10 flex items-center justify-between border-b border-border bg-surface/95 px-6 py-3 backdrop-blur">
           <div className="flex items-center gap-3">
-            <span className="mono-label !text-brand">Academic project</span>
+            <span className="mono-label !text-brand">Project</span>
             <span className="mono-label">{project.year}</span>
           </div>
           <button

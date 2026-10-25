@@ -13,7 +13,7 @@ function ProjectCard({ project, onSelect }: { project: Project; onSelect: () => 
         <div aria-hidden className="absolute -right-8 bottom-0 h-36 w-36 -rotate-12 border border-brand/40" />
         <div aria-hidden className="figma-dots absolute right-6 top-5 h-16 w-16 opacity-70" />
         <div className="relative z-10 border border-border-strong bg-background/90 px-5 py-4 text-center shadow-xl">
-          <span className="block text-[11px] text-brand">Academic project{project.year ? ` / ${project.year}` : ''}</span>
+          <span className="block text-[11px] text-brand">Project{project.year ? ` / ${project.year}` : ''}</span>
           <span className="mt-2 block text-xl font-semibold text-foreground">{project.title}</span>
         </div>
       </div>
