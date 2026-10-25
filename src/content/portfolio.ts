@@ -27,7 +27,7 @@ export const profile = {
   },
 } as const;
 
-export const heroQuote = "Good AI work starts with a clear problem and ends with something people can use.";
+export const heroQuote = "Scale intelligence where it helps. Distill it where it matters. Rethink it where it fails.";
 
 export const replacedProfileImages = [
   '/profile.jpeg',

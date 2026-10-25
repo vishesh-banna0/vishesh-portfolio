@@ -48,7 +48,7 @@ export default function Hero({ profile, roles }: { profile: ProfileView; roles: 
           <blockquote className="relative border border-border-strong p-8 text-[24px] font-medium leading-normal text-foreground">
             <span className="absolute -top-[15px] left-[6px] bg-background px-1"><img src="/figma/quote.svg" alt="" className="block" /></span>
             {heroQuote}
-            <span className="absolute right-[11.5px] top-[79px] bg-background px-1"><img src="/figma/quote.svg" alt="" className="block" /></span>
+            <span className="absolute bottom-2 right-[11.5px] bg-background px-1"><img src="/figma/quote.svg" alt="" className="block" /></span>
           </blockquote>
           <div className="-mt-2 ml-auto w-fit border border-border-strong p-4 text-base text-foreground">- {profile.name}</div>
         </div>
