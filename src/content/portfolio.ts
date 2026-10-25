@@ -36,9 +36,11 @@ export const replacedProfileImages = [
 
 /** Typewriter roles — CRUD-editable in the admin (add / edit / reorder / remove). */
 export const roles: string[] = [
-  "M.Tech AI at NIT Jalandhar",
-  "building Prospera.ai",
-  "building ReVisit",
+  "M.Tech AI @ NIT Jalandhar",
+  "AI / ML engineer",
+  "Pythonist",
+  "Problem solver",
+  "Project builder",
 ];
 
 /** Headline stats — CRUD-editable (values like ranks / DSA count change over time). */
@@ -47,6 +49,9 @@ export const stats: { value: string; label: string }[] = [
   { value: "6th", label: "StatHack, IIT Goa · team lead" },
   { value: "238 / 4,370", label: "Heart Disease Prediction competition" },
   { value: "300+", label: "LeetCode problems solved" },
+  { value: "73", label: "TensorTonic global rank" },
+  { value: "203", label: "Deep-ML global rank" },
+  { value: "2024 & 2025", label: "GATE qualified" },
 ];
 
 export const about = {
@@ -140,6 +145,39 @@ export const projects: Project[] = [
     stack: ["Python", "FastAPI", "PostgreSQL", "Supabase Auth", "Next.js"],
     githubUrl: "https://github.com/vishesh-banna0/ReVisit",
     status: "building",
+    year: "2026",
+  },
+  {
+    slug: "retail-operations-copilot",
+    title: "Retail Operations Copilot",
+    summary: "A policy-grounded assistant for retail issue triage and CSV-backed answers.",
+    description:
+      "A local Streamlit and CLI assistant that classifies retail issues, applies priority and escalation rules, retrieves policy sections, and answers a defined set of operational questions from CSV data. It masks sensitive details and presents recommendations for human review.",
+    stack: ["Python", "Streamlit", "ChromaDB", "pandas", "OpenRouter"],
+    githubUrl: "https://github.com/vishesh-banna0/HCLTech-Hackathon",
+    status: "shipped",
+    year: "2026",
+  },
+  {
+    slug: "sales-forecasting",
+    title: "Multi-State Sales Forecasting",
+    summary: "A forecasting pipeline comparing statistical, ML, and deep learning models.",
+    description:
+      "A Python pipeline that cleans state-level sales data, builds lag and calendar features, compares ARIMA, Prophet, XGBoost, and LSTM with chronological validation, and serves saved 56-day forecasts through FastAPI.",
+    stack: ["Python", "XGBoost", "LSTM", "Prophet", "FastAPI"],
+    githubUrl: "https://github.com/vishesh-banna0/microgcc_assignment",
+    status: "shipped",
+    year: "2026",
+  },
+  {
+    slug: "rag-components",
+    title: "RAG Components",
+    summary: "Reusable document ingestion and retrieval pieces for grounded AI tools.",
+    description:
+      "A Python toolkit for PDF and text ingestion, chunking with page provenance, local embeddings, FAISS storage, and dense, BM25, or hybrid retrieval. Optional reranking and image retrieval are available, with offline checks for the core pipeline.",
+    stack: ["Python", "FAISS", "BM25", "BGE", "CLIP"],
+    githubUrl: "https://github.com/vishesh-banna0/RAG-Components",
+    status: "shipped",
     year: "2026",
   },
 ];

@@ -13,7 +13,7 @@ function ProjectCard({ project, onSelect }: { project: Project; onSelect: () => 
         <div aria-hidden className="absolute -right-8 bottom-0 h-36 w-36 -rotate-12 border border-brand/40" />
         <div aria-hidden className="figma-dots absolute right-6 top-5 h-16 w-16 opacity-70" />
         <div className="relative z-10 border border-border-strong bg-background/90 px-5 py-4 text-center shadow-xl">
-          <span className="block text-[11px] text-brand">{project.status ?? 'project'} / {project.year}</span>
+          <span className="block text-[11px] text-brand">Academic project{project.year ? ` / ${project.year}` : ''}</span>
           <span className="mt-2 block text-xl font-semibold text-foreground">{project.title}</span>
         </div>
       </div>
@@ -33,16 +33,16 @@ export default function Projects({ projects }: { projects: Project[] }) {
   const [selected, setSelected] = useState<Project | null>(null);
   const [showAll, setShowAll] = useState(false);
   const ordered = [...projects].sort((a, b) => Number(Boolean(b.featured)) - Number(Boolean(a.featured)));
-  const visible = showAll ? ordered : ordered.slice(0, 3);
+  const visible = showAll ? ordered : ordered.slice(0, 6);
 
   return (
     <section id="work" className="relative py-20 md:py-28">
       <div className="container max-w-[1072px]">
         <div className="flex items-start justify-between gap-5">
           <SectionHeader eyebrow="projects" />
-          {ordered.length > 3 && (
+          {ordered.length > 6 && (
             <button onClick={() => setShowAll((value) => !value)} className="mt-2 shrink-0 text-sm text-foreground hover:text-brand">
-              {showAll ? 'Show less ←' : 'View all ~~>'}
+              {showAll ? 'Show less ←' : `View all (${ordered.length}) ~~>`}
             </button>
           )}
         </div>

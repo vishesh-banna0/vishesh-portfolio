@@ -14,7 +14,7 @@ export default async function RolesPage() {
     <div className="max-w-3xl">
       <PageTitle eyebrow="Content" title="Hero typewriter" />
       <p className="mb-6 text-sm text-muted-foreground">
-        The rotating “Currently” lines below your portrait. Edit, reorder, or remove them here.
+        The rotating lines below your portrait. Edit, reorder, or remove them here.
       </p>
 
       <div className="space-y-2">

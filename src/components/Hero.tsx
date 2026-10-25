@@ -39,7 +39,7 @@ export default function Hero({ profile, roles }: { profile: ProfileView; roles: 
             <FigmaDots className="absolute right-4 top-[246px] z-10" />
             <div className="relative ml-[31px] mr-[36px] flex min-h-[37px] items-center gap-[10px] border border-border-strong bg-background p-2 text-sm text-muted-foreground">
               <span aria-hidden="true" className="h-4 w-4 shrink-0 bg-brand" />
-              <span className="min-w-0">Currently: <strong className="font-semibold text-foreground">{roles.length ? <TypewriterText texts={roles} /> : profile.currently}</strong></span>
+              <strong className="min-w-0 font-semibold text-foreground">{roles.length ? <TypewriterText texts={roles} /> : profile.currently}</strong>
             </div>
           </div>
         </div>
