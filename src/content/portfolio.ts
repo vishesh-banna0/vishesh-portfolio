@@ -114,6 +114,17 @@ export const projects: Project[] = [
     year: "2025–26",
   },
   {
+    slug: "multilingual-entity-resolution",
+    title: "Multilingual Entity Resolution",
+    summary: "Matching noisy business records across sources, with 0.99078 macro F0.5 in validation.",
+    description:
+      "Built a multilingual system to link noisy business records across three sources. Candidate retrieval and XGBoost features feed a graph model, with an XLM-R cross-encoder for ambiguous pairs and expected-F0.5 decoding. On 357,966 held-out reference entities under simulated-prior validation, it reached 0.99078 macro F0.5, 99.87% pair precision, and 97.44% pair recall. I led the team to rank 206 in Amazon ML Challenge 2026; the model metrics are local validation results, not leaderboard scores.",
+    stack: ["Python", "XGBoost", "PyTorch", "XLM-R", "Graph Neural Network"],
+    githubUrl: "https://github.com/vishesh-banna0/multilingual-entity-resolution",
+    featured: true,
+    year: "2026",
+  },
+  {
     slug: "newstack-ai",
     title: "NewStack AI",
     summary: "A daily AI briefing assembled from RSS feeds and YouTube transcripts.",
@@ -132,7 +143,6 @@ export const projects: Project[] = [
       "A two-tower recommender trained on MovieLens 10M. It precomputes film embeddings for FAISS retrieval, compares full-catalogue Recall@10 and NDCG@10 against a popularity baseline, and serves recommendations through FastAPI and a Streamlit demo.",
     stack: ["Python", "PyTorch", "FAISS", "FastAPI", "Streamlit"],
     githubUrl: "https://github.com/vishesh-banna0/CineMatch",
-    featured: true,
     status: "shipped",
     year: "2026",
   },
