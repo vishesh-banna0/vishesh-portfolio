@@ -32,7 +32,7 @@ export default async function HeroPage() {
             <Input name="location" defaultValue={p?.location ?? ''} />
           </Field>
         </div>
-        <Field label="Thesis" hint="the line under the typewriter">
+        <Field label="Thesis" hint="the introduction below the headline">
           <Textarea name="thesis" defaultValue={p?.thesis ?? ''} />
         </Field>
         <div className="grid gap-4 sm:grid-cols-2">

@@ -13,7 +13,7 @@ export default function Contact({ profile }: { profile: ProfileView }) {
         <div className="grid gap-10 md:grid-cols-[1fr_290px] md:items-start">
           <Reveal>
             <p className="max-w-lg text-sm leading-7 text-muted-foreground">
-              Open to research and engineering roles, collaborations, and hard problems. The fastest way to reach me is email.
+              I’m open to AI and ML engineering roles and thoughtful collaborations. Email is the easiest way to reach me.
             </p>
             <a href={`mailto:${profile.email}`} className="btn-primary mt-6 text-sm">Send a message →</a>
           </Reveal>

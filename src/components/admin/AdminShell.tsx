@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { Logo } from '@/components/Logo';
 import { usePathname, useRouter } from 'next/navigation';
 import {
   LayoutDashboard,
@@ -24,7 +25,7 @@ const navItems = [
   { href: '/admin/projects', label: 'Projects', icon: FolderGit2 },
   { href: '/admin/education', label: 'Timeline', icon: GraduationCap },
   { href: '/admin/writing', label: 'Writing', icon: PenLine },
-  { href: '/admin/roles', label: 'Roles', icon: Type },
+  { href: '/admin/roles', label: 'Hero typewriter', icon: Type },
   { href: '/admin/stats', label: 'Stats', icon: BarChart3 },
   { href: '/admin/media', label: 'Media', icon: ImageIcon },
   { href: '/admin/theme', label: 'Theme', icon: Palette },
@@ -44,9 +45,7 @@ export function AdminShell({ email, children }: { email: string; children: React
     <div className="min-h-screen md:grid md:grid-cols-[240px_1fr]">
       <aside className="border-b border-border md:min-h-screen md:border-b-0 md:border-r">
         <div className="flex items-center gap-2.5 p-5">
-          <span className="grid h-7 w-7 place-items-center rounded bg-brand font-display text-sm font-bold text-brand-foreground">
-            V
-          </span>
+          <Logo className="h-7 w-7" />
           <div>
             <div className="font-display text-sm font-semibold leading-tight">Admin</div>
             <div className="mono-label !text-[0.6rem]">Content · Theme · Media</div>

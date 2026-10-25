@@ -6,7 +6,7 @@ import { useEffect } from 'react';
  * Keeps the browser-tab favicon in sync with the theme's brand color. The
  * favicon lives outside the page DOM, so it can't inherit CSS vars like the
  * in-page <Logo/> — instead we read the *computed* --brand-h/s/l and rewrite
- * the icon as an inline SVG. When the hue-cycle is on we redraw on an interval
+ * the same mark as an inline SVG. When the hue-cycle is on we redraw on an interval
  * so the tab icon drifts along with the site (browsers throttle favicon swaps,
  * so this is a coarse ~1s approximation, not a smooth animation).
  */
@@ -27,16 +27,9 @@ export function FaviconSync() {
       const s = cs.getPropertyValue('--brand-s').trim() || '61%';
       const l = cs.getPropertyValue('--brand-l').trim() || '67%';
       const brand = `hsl(${h} ${s} ${l})`;
-      const bright = `hsl(${h} ${s} 66%)`; // matches --brand-bright
-
       const svg =
-        `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" fill="none">` +
-        `<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">` +
-        `<stop offset="0%" stop-color="${brand}"/><stop offset="100%" stop-color="${bright}"/>` +
-        `</linearGradient></defs>` +
-        `<circle cx="20" cy="20" r="18" stroke="url(#g)" stroke-width="2" fill="none" opacity="0.5"/>` +
-        `<path d="M12 12 L20 28 L28 12" stroke="url(#g)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>` +
-        `<path d="M16 14 C16 14 24 10 24 16 C24 22 16 20 16 26 C16 30 24 28 24 28" stroke="url(#g)" stroke-width="2.5" stroke-linecap="round" fill="none" opacity="0.6"/>` +
+        `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">` +
+        `<path d="M12 0H8V4H4H0V8V12V16H4H8V12H12H16V8V4V0H12ZM4 12H8V8H12V4H8V8H4V12Z" fill="${brand}" fill-rule="evenodd" clip-rule="evenodd"/>` +
         `</svg>`;
 
       link!.type = 'image/svg+xml';

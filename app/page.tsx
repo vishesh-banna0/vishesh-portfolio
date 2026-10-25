@@ -64,9 +64,9 @@ export default async function Home() {
       <ScrollProgress />
       <Navbar profile={profile} />
       <main id="main">
-        <Hero profile={profile} />
+        <Hero profile={profile} roles={roles} />
         <Projects projects={projects} />
-        <Skills about={about} stats={stats} roles={roles} />
+        <Skills about={about} stats={stats} />
         <About about={about} profile={profile} />
         <Timeline education={education} />
         <Writing writing={writing} />

@@ -19,14 +19,14 @@ export const metadata: Metadata = {
   metadataBase: new URL(process.env.SITE_URL || "https://visheshshekhawat.com"),
   title: "Vishesh Shekhawat | ML / AI Systems Engineer",
   description:
-    "Vishesh Shekhawat — ML/AI systems engineer (M.Tech AI, NIT Jalandhar). Building agentic systems, diffusion models, and LLM infrastructure from paper to production.",
-  keywords: ["AI", "ML", "Machine Learning", "Deep Learning", "Diffusion Models", "LLM", "Agents", "NIT Jalandhar", "Vishesh Shekhawat"],
+    "Vishesh Shekhawat builds practical AI products, from recommendation and retrieval models to useful APIs and interfaces.",
+  keywords: ["AI", "ML", "Machine Learning", "Recommendation Systems", "Retrieval", "NIT Jalandhar", "Vishesh Shekhawat"],
   authors: [{ name: "Vishesh Shekhawat" }],
-  icons: { icon: "/logo.svg" },
+  icons: { icon: "/figma/mark.svg" },
   openGraph: {
     title: "Vishesh Shekhawat | ML / AI Systems Engineer",
     description:
-      "Building agentic systems, diffusion models, and LLM infrastructure — from paper to production.",
+      "Building practical AI products across models, APIs, and interfaces.",
     type: "website",
   },
 };

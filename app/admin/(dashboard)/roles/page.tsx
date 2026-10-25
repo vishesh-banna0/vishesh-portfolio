@@ -12,9 +12,9 @@ export default async function RolesPage() {
 
   return (
     <div className="max-w-3xl">
-      <PageTitle eyebrow="Content" title="Typewriter roles" />
+      <PageTitle eyebrow="Content" title="Hero typewriter" />
       <p className="mb-6 text-sm text-muted-foreground">
-        The rotating lines under your name in the hero. Edit, reorder, or remove — the site updates immediately.
+        The rotating “Currently” lines below your portrait. Edit, reorder, or remove them here.
       </p>
 
       <div className="space-y-2">
@@ -38,9 +38,9 @@ export default async function RolesPage() {
       </div>
 
       <form action={createRole} className="panel mt-4 flex items-center gap-2 p-2">
-        <Input name="text" placeholder="Add a new role…" required />
+        <Input name="text" placeholder="Add a current update…" required />
         <button type="submit" className="btn-secondary whitespace-nowrap !px-4 !py-2 text-sm">
-          Add role
+          Add line
         </button>
       </form>
     </div>

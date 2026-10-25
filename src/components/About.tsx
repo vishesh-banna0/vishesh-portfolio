@@ -9,7 +9,6 @@ export default function About({ about, profile }: { about: AboutView; profile: P
         <SectionHeader eyebrow="about-me" />
         <div className="grid items-start gap-12 md:grid-cols-[1.15fr_0.85fr] md:gap-20">
           <div className="max-w-[560px] space-y-5 text-sm leading-7 text-muted-foreground">
-            <p>Hello, I’m {profile.name}!</p>
             <p>{about.lede}</p>
             {about.paragraphs.map((paragraph, index) => <p key={index}>{paragraph}</p>)}
             <a href={profile.resumeUrl} download className="btn-primary text-sm">Download CV →</a>

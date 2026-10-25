@@ -71,7 +71,10 @@ export async function getAbout() {
 
 export async function getProjects() {
   try {
-    const rows = await prisma.project.findMany({ orderBy: { order: 'asc' } });
+    const rows = await prisma.project.findMany({
+      where: { status: { not: 'RESEARCH' }, slug: { not: 'voyage-ai' } },
+      orderBy: { order: 'asc' },
+    });
     if (rows.length) {
       const projects = rows.map((r) => ({
         slug: r.slug,

@@ -1,14 +1,13 @@
 import { SectionHeader } from './Section';
 import { FigmaDots } from './FigmaDots';
-import TypewriterText from './TypewriterText';
 import type { AboutView, StatView } from '@/content/portfolio';
 
-export default function Skills({ about, stats, roles }: { about: AboutView; stats: StatView[]; roles: string[] }) {
+export default function Skills({ about, stats }: { about: AboutView; stats: StatView[] }) {
   const groups = [
-    { title: 'AI & models', items: about.focus.slice(0, 2) },
-    { title: 'Retrieval', items: about.focus.slice(2, 3) },
-    { title: 'Systems', items: about.focus.slice(3, 5) },
-    { title: 'Tools', items: about.focus.slice(5) },
+    { title: 'ML & evaluation', items: about.focus.slice(0, 4) },
+    { title: 'Retrieval & agents', items: about.focus.slice(4, 8) },
+    { title: 'Backend & data', items: about.focus.slice(8, 12) },
+    { title: 'Product UI', items: about.focus.slice(12) },
   ].filter((group) => group.items.length > 0);
 
   return (
@@ -22,21 +21,15 @@ export default function Skills({ about, stats, roles }: { about: AboutView; stat
             <div className="absolute bottom-3 left-3 h-14 w-14 border border-brand/70" />
             <div className="absolute bottom-9 left-10 h-14 w-14 border border-brand/70" />
           </div>
-          <div className="grid items-start gap-4 sm:grid-cols-3">
+          <div className="grid items-start gap-4 sm:grid-cols-2">
             {groups.map((group) => (
               <div key={group.title} className="border border-border-strong text-sm">
                 <h3 className="border-b border-border-strong px-2 py-2 font-semibold text-foreground">{group.title}</h3>
-                <div className="flex flex-wrap gap-x-2 gap-y-2 px-2 py-3 leading-6 text-muted-foreground">
-                  {group.items.map((item) => <span key={item}>{item}</span>)}
-                </div>
+                <ul className="space-y-1 px-2 py-3 leading-6 text-muted-foreground">
+                  {group.items.map((item) => <li key={item}>{item}</li>)}
+                </ul>
               </div>
             ))}
-            {roles.length > 0 && (
-              <div className="border border-border-strong text-sm">
-                <h3 className="border-b border-border-strong px-2 py-2 font-semibold text-foreground">Roles</h3>
-                <div className="min-h-16 px-2 py-3 leading-6 text-muted-foreground"><TypewriterText texts={roles} /></div>
-              </div>
-            )}
           </div>
         </div>
         {stats.length > 0 && (
