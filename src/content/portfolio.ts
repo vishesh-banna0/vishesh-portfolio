@@ -90,11 +90,23 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    slug: "knect",
+    title: "Knect",
+    summary: "Keeps the reasoning behind code changes in reviewed, searchable project knowledge.",
+    description:
+      "A commit shows what changed but often loses why it changed. Knect pairs a VS Code review interface with a FastAPI and SQLite knowledge service: the backend captures commit evidence, prepares findings for contributor review, publishes only approved knowledge, and retrieves answers with citations. The backend workflow works locally; the extension currently uses demo data and is not yet connected to it.",
+    stack: ["VS Code", "TypeScript", "React", "FastAPI", "SQLite"],
+    githubUrl: "https://github.com/vishesh-banna0/Knect",
+    featured: true,
+    status: "building",
+    year: "2026",
+  },
+  {
     slug: "prospera-ai",
     title: "Prospera.ai",
-    summary: "Market intelligence with paper trading, explainable signals, and backtesting.",
+    summary: "Puts market research, paper trading, and strategy backtests in one place.",
     description:
-      "I built a shared market-data service and paper-trading portfolios, then added news intelligence, company scorecards, prediction baselines, explainable signals, and SIP and lump-sum backtests. It runs locally with SQLite; the Next.js interface is in progress.",
+      "Investment research is scattered across price feeds, headlines, and spreadsheets. Prospera brings those inputs together: a shared market-data service powers paper portfolios, news and company scorecards feed explainable Buy/Hold/Sell signals, and SIP or lump-sum backtests show historical risk and return. The backend runs locally; its Next.js interface is still being built.",
     stack: ["Python", "FastAPI", "SQLite", "Next.js", "pytest", "GitHub Actions"],
     githubUrl: "https://github.com/vishesh-banna0/prospera.ai",
     featured: true,
@@ -104,9 +116,9 @@ export const projects: Project[] = [
   {
     slug: "manos-ai",
     title: "Manos AI",
-    summary: "Study material becomes grounded flashcards and a personal revision plan.",
+    summary: "Turns study documents into source-backed flashcards and a review plan for weak topics.",
     description:
-      "Manos AI turns documents into source-grounded flashcards, plans revision from learning history, and schedules reviews with SM-2. Its retrieval pipeline blends semantic and lexical search, while an evaluation harness checks retrieval and card quality.",
+      "Long PDFs are hard to turn into focused revision, and reviewing every topic equally wastes time. Manos extracts and semantically chunks study documents, retrieves supporting passages with FAISS and lexical search, then plans, writes, and critiques flashcards tied to those passages. Review history drives SM-2 scheduling and follow-up for weaker topics.",
     stack: ["Python", "FastAPI", "PostgreSQL", "FAISS", "Ollama", "React"],
     githubUrl: "https://github.com/vishesh-banna0/manOS-ai",
     featured: true,
@@ -116,9 +128,9 @@ export const projects: Project[] = [
   {
     slug: "multilingual-entity-resolution",
     title: "Multilingual Entity Resolution",
-    summary: "Matching noisy business records across sources, with 0.99078 macro F0.5 in validation.",
+    summary: "Links messy business listings across languages so one company is not counted as several.",
     description:
-      "Built a multilingual system to link noisy business records across three sources. Candidate retrieval and XGBoost features feed a graph model, with an XLM-R cross-encoder for ambiguous pairs and expected-F0.5 decoding. On 357,966 held-out reference entities under simulated-prior validation, it reached 0.99078 macro F0.5, 99.87% pair precision, and 97.44% pair recall. I led the team to rank 206 in Amazon ML Challenge 2026; the model metrics are local validation results, not leaderboard scores.",
+      "Different spellings, scripts, and addresses make it hard to tell whether business records from three sources describe the same entity. The pipeline retrieves likely pairs, ranks them with XGBoost and a graph model, reranks ambiguous cases with XLM-R, and selects links with expected-F0.5 decoding. On held-out simulated-prior validation across 357,966 reference entities, it reached 0.99078 macro F0.5, 99.87% pair precision, and 97.44% pair recall. These are local validation results, not leaderboard scores; the team ranked 206 in Amazon ML Challenge 2026.",
     stack: ["Python", "XGBoost", "PyTorch", "XLM-R", "Graph Neural Network"],
     githubUrl: "https://github.com/vishesh-banna0/multilingual-entity-resolution",
     featured: true,
@@ -127,9 +139,9 @@ export const projects: Project[] = [
   {
     slug: "newstack-ai",
     title: "NewStack AI",
-    summary: "A daily AI briefing assembled from RSS feeds and YouTube transcripts.",
+    summary: "Cuts through AI news overload with a daily email digest tuned to the reader's interests.",
     description:
-      "A modular pipeline collects AI news, converts articles and transcripts into readable summaries, ranks them against a reader profile, and sends a deduplicated email digest.",
+      "AI updates are spread across feeds and long videos. NewStack collects RSS articles and YouTube transcripts, converts them to readable text, summarizes them with LLMs, ranks items against a reader profile, and emails a curated digest without resending the same story.",
     stack: ["Python", "PostgreSQL", "SQLAlchemy", "LLMs", "Docker"],
     githubUrl: "https://github.com/vishesh-banna0/NewStack-AI",
     status: "shipped",
@@ -138,9 +150,9 @@ export const projects: Project[] = [
   {
     slug: "cinematch",
     title: "CineMatch.ai",
-    summary: "A movie recommender that learns taste instead of repeating popular picks.",
+    summary: "Finds films from a viewer's rating history instead of showing everyone the same popular titles.",
     description:
-      "A two-tower recommender trained on MovieLens 10M. It precomputes film embeddings for FAISS retrieval, compares full-catalogue Recall@10 and NDCG@10 against a popularity baseline, and serves recommendations through FastAPI and a Streamlit demo.",
+      "Popular-movie lists ignore individual taste. CineMatch trains separate user and film towers on MovieLens 10M ratings, stores film embeddings in FAISS, and retrieves unseen titles near a viewer's embedding. A FastAPI endpoint and Streamlit demo serve recommendations; full-catalogue Recall@10 and NDCG@10 are compared with a popularity baseline.",
     stack: ["Python", "PyTorch", "FAISS", "FastAPI", "Streamlit"],
     githubUrl: "https://github.com/vishesh-banna0/CineMatch",
     status: "shipped",
@@ -149,9 +161,9 @@ export const projects: Project[] = [
   {
     slug: "revisit",
     title: "ReVisit",
-    summary: "A practice tracker that knows what to review, not just what you solved.",
+    summary: "Shows which solved coding problems to review before they fade from memory.",
     description:
-      "ReVisit tracks coding attempts, confidence, and revision history to estimate what still sticks. It schedules the next review and explains each recommendation in plain language, with a FastAPI backend and Next.js frontend.",
+      "Solving a problem once does not mean it will still be familiar in an interview. ReVisit records attempts, hints, confidence, and revision history, then estimates mastery and schedules the next review from those signals. Its FastAPI backend and Next.js frontend recommend weak patterns or overdue problems and explain why each one comes next.",
     stack: ["Python", "FastAPI", "PostgreSQL", "Supabase Auth", "Next.js"],
     githubUrl: "https://github.com/vishesh-banna0/ReVisit",
     status: "building",
@@ -160,9 +172,9 @@ export const projects: Project[] = [
   {
     slug: "retail-operations-copilot",
     title: "Retail Operations Copilot",
-    summary: "A policy-grounded assistant for retail issue triage and CSV-backed answers.",
+    summary: "Helps retail teams triage incidents using policy evidence and operational CSV data.",
     description:
-      "A local Streamlit and CLI assistant that classifies retail issues, applies priority and escalation rules, retrieves policy sections, and answers a defined set of operational questions from CSV data. It masks sensitive details and presents recommendations for human review.",
+      "Store issues are hard to prioritize when policies and operational records live in separate files. This local Streamlit and CLI assistant classifies a request, applies fixed priority and escalation rules, retrieves relevant policy sections, and computes answers for supported CSV questions. It masks sensitive details and leaves actions for human review.",
     stack: ["Python", "Streamlit", "ChromaDB", "pandas", "OpenRouter"],
     githubUrl: "https://github.com/vishesh-banna0/HCLTech-Hackathon",
     status: "shipped",
@@ -171,9 +183,9 @@ export const projects: Project[] = [
   {
     slug: "sales-forecasting",
     title: "Multi-State Sales Forecasting",
-    summary: "A forecasting pipeline comparing statistical, ML, and deep learning models.",
+    summary: "Forecasts sales by state for the next 56 days while comparing four modelling approaches.",
     description:
-      "A Python pipeline that cleans state-level sales data, builds lag and calendar features, compares ARIMA, Prophet, XGBoost, and LSTM with chronological validation, and serves saved 56-day forecasts through FastAPI.",
+      "State-level sales data can have missing days and inconsistent dates, making forecasts difficult to compare. This pipeline cleans the daily series, creates lag and calendar features, compares ARIMA, Prophet, XGBoost, and LSTM using chronological validation, and serves the saved 56-day forecasts through FastAPI.",
     stack: ["Python", "XGBoost", "LSTM", "Prophet", "FastAPI"],
     githubUrl: "https://github.com/vishesh-banna0/microgcc_assignment",
     status: "shipped",
@@ -182,9 +194,9 @@ export const projects: Project[] = [
   {
     slug: "rag-components",
     title: "RAG Components",
-    summary: "Reusable document ingestion and retrieval pieces for grounded AI tools.",
+    summary: "Provides reusable document search pieces that keep results tied to their source pages.",
     description:
-      "A Python toolkit for PDF and text ingestion, chunking with page provenance, local embeddings, FAISS storage, and dense, BM25, or hybrid retrieval. Optional reranking and image retrieval are available, with offline checks for the core pipeline.",
+      "Document assistants need a reliable way to find the right passage before generating an answer. RAG Components extracts PDF and text content, chunks it with page provenance, builds local embeddings and FAISS indexes, and offers dense, BM25, or hybrid retrieval. Optional reranking and image retrieval extend the search layer; answer generation is left to the app using it.",
     stack: ["Python", "FAISS", "BM25", "BGE", "CLIP"],
     githubUrl: "https://github.com/vishesh-banna0/RAG-Components",
     status: "shipped",
